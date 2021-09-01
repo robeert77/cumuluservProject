@@ -7,13 +7,18 @@ use App\Models\Company;
 
 class CompanyController extends Controller
 {
-    function add(Request $request)
+    function insertInDatabase(&$company, $request)
     {
-        $company = new Company;
         $company->name = $request->input('client');
         $company->phone_number = $request->input('phoneNumber');
         $company->with_contract = ($request->contract === 'true');
         $company->save();
+    }
+
+    function add(Request $request)
+    {
+        $company = new Company;
+        self::insertInDatabase($company, $request);
         return redirect(route('home'));
     }
 
@@ -53,11 +58,8 @@ class CompanyController extends Controller
     function updateCompany(Request $request, $id)
     {
         $company = Company::find($id);
-        $company->name = $request->input('client');
-        $company->phone_number = $request->input('phoneNumber');
-        $company->with_contract = ($request->contract === 'true');
         $company->details = $request->details;
-        $company->save();
+        self::insertInDatabase($company, $request);
         return redirect(route('detailsCompany', $id));
     }
 }
