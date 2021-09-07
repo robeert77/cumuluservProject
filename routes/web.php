@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\InterventionController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,7 @@ Route::get('/', [CompanyController::class, 'companiesList'])
     ->middleware(['verified', 'auth'])
     ->name('home');
 
-Route::get('/new-company', [CompanyController::class, 'createClient'])
+Route::view('/new-company', 'new-company')
     ->middleware(['verified', 'auth'])
     ->name('newCompany');
 
@@ -34,8 +36,16 @@ Route::get('/company/{id}/edit', [CompanyController::class, 'editCompany'])
     ->middleware(['verified', 'auth'])
     ->name('editCompany');
 
-Route::post('/company/{id}/update', [CompanyController::class, 'updateCompany'])
+Route::post('/company/{id}/edit', [CompanyController::class, 'updateCompany'])
     ->middleware(['verified', 'auth'])
     ->name('updateCompany');
+
+Route::get('/company/{id}/intervention', [InterventionController::class, 'showForm'])
+    ->middleware(['verified', 'auth'])
+    ->name('createIntervention');
+
+Route::post('/company/{id}/intervention', [InterventionController::class, 'saveIntervention'])
+    ->middleware(['verified', 'auth'])
+    ->name('createIntervention');
 
 require __DIR__.'/auth.php';

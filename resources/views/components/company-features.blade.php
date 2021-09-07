@@ -6,8 +6,8 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="company/{{ $company->id }}/details">Detalii client</a></li>
-                <li><a class="dropdown-item" href="#">Formular interventie</a></li>
-                <li><a class="dropdown-item" href="#">Vizualizare rapoart</a></li>
+                <li><a class="dropdown-item" href="company/{{ $company->id }}/intervention">Formular interventie</a></li>
+                <li><a class="dropdown-item" href="#">Vizualizare rapoarte</a></li>
                 <li><a class="dropdown-item" href="#">Vanzare produse</a></li>
                 <li><a class="dropdown-item" href="#">Formular deplasare</a></li>
                 <li><a class="dropdown-item" href="#">Sterge client</a></li>

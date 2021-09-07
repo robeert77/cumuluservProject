@@ -7,7 +7,7 @@ use App\Models\Company;
 
 class CompanyController extends Controller
 {
-    function insertInDatabase(&$company, $request)
+    private function insertInDatabase(&$company, $request)
     {
         $company->name = $request->input('client');
         $company->phone_number = $request->input('phoneNumber');
@@ -15,19 +15,19 @@ class CompanyController extends Controller
         $company->save();
     }
 
-    function add(Request $request)
+    private function getCompanyById($id)
+    {
+        return Company::where('id', $id)->get()->first();
+    }
+
+    public function add(Request $request)
     {
         $company = new Company;
         self::insertInDatabase($company, $request);
         return redirect(route('home'));
     }
 
-    function createClient()
-    {
-        return view('new-company');
-    }
-
-    function companiesList() {
+    public function companiesList() {
         $companiesWith = Company::where('with_contract', 'true')
                                 ->orderBy('name')
                                 ->get();
@@ -40,22 +40,18 @@ class CompanyController extends Controller
                     ->with('companiesWithoutContract', $companiesWithout);
     }
 
-    function showDetails($id)
+    public function showDetails($id)
     {
-        $details = Company::where('id', $id)
-                            ->get();
         return view('company-details')
-                    ->with('company', $details->first());
+                    ->with('company', self::getCompanyById($id));
     }
 
-    function editCompany($id) {
-        $details = Company::where('id', $id)
-                            ->get();
+    public function editCompany($id) {
         return view('edit-company')
-                    ->with('company', $details->first());
+                    ->with('company', self::getCompanyById($id));
     }
 
-    function updateCompany(Request $request, $id)
+    public function updateCompany(Request $request, $id)
     {
         $company = Company::find($id);
         $company->details = $request->details;

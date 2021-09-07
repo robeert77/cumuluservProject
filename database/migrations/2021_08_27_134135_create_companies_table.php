@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('phone_number')->nullable();
             $table->boolean('with_contract');
             $table->text('details')->nullable();
+            $table->integer('nr_next_movement')->default(1);
             $table->timestamps();
         });
     }

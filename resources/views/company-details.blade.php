@@ -13,10 +13,10 @@
 
                 @if (!$company->details)
                     <span class="card-title fs-5">Momentan nu exista detalii.</span>
+                    <br>
                 @else
-                    {{ $company->details }}
+                    <p> {{ $company->details }} </p>
                 @endif
-                <br>
                 <a href="/company/{{ $company->id }}/edit" class="btn btn-dark mt-2">Editeaza informatiile</a>
             </div>
         </div>
