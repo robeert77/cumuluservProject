@@ -4,7 +4,7 @@
             <h3 class="fs-5">Clienti cu contract:</h3>
             <div class="container px-0 mt-4 mt-lg-0" style="max-height: 400px;">
                 @foreach ($companiesWithContract as $company)
-                    <x-company-features :company="$company"/>
+                    <x-company-features :company="$company" :currentDate="$currentDate"/>
                 @endforeach
             </div>
         </div>
@@ -12,7 +12,7 @@
             <h3 class="fs-5">Clienti fara contract:</h3>
             <div class="container px-0 mt-4 mt-lg-0" style="max-height: 500px;">
                 @foreach ($companiesWithoutContract as $company)
-                    <x-company-features :company="$company"/>
+                    <x-company-features :company="$company" :currentDate="$currentDate"/>
                 @endforeach
             </div>
         </div>

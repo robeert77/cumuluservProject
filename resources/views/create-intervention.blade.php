@@ -29,7 +29,6 @@
                                 <x-label for="password" :value="__('Ora sfarsit')" />
 
                                 <x-input id="email" class="block mt-1 w-full" type="time" name="endAt" :value="old('email')" required />
-
                             </div>
 
                             <!-- Observations -->
@@ -41,11 +40,10 @@
 
                             <!-- Intervention made by -->
                             <div class="mt-4">
-                                <select class="form-select" name="users" aria-label="Default select example">
+                                <select class="form-select" name="users" aria-label="Default select example">\
+                                    <option selected value="{{ Auth::user()->id }}"> {{ Auth::user()->name }} </option>
                                     @foreach ($users as $user)
-                                        @if ($user->name == Auth::user()->name)
-                                            <option selected value="{{ $user->id }}"> {{ $user->name }} </option>
-                                        @else
+                                        @if ($user->name != Auth::user()->name)
                                             <option value="{{ $user->id }}"> {{ $user->name }} </option>
                                         @endif
                                     @endforeach

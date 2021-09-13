@@ -17,7 +17,7 @@
                 @else
                     <p> {{ $company->details }} </p>
                 @endif
-                <a href="/company/{{ $company->id }}/edit" class="btn btn-dark mt-2">Editeaza informatiile</a>
+                <a href="{{ route('editCompany', $company->id) }}" class="btn btn-dark mt-2">Editeaza informatiile</a>
             </div>
         </div>
     </div>

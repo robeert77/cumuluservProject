@@ -13,14 +13,17 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+        <!-- Own css file -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="bg-light">
+    <body class="bg-white">
         @include('layouts.navigation')
 
         <!-- Page Content -->
-        <main class="container bg-white">
+        <main class="container">
             {{ $slot }}
         </main>
     </body>

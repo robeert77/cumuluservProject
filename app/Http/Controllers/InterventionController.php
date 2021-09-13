@@ -28,6 +28,7 @@ class InterventionController extends Controller
 
     public function saveIntervention(Request $request, $id)
     {
+        // dd($request->input());
         $intervention = new Intervention;
         self::insertInDatabase($intervention, $request, $id);
         return redirect(route('home'));

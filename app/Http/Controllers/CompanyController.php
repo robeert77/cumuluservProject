@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use Carbon\Carbon;
 
 class CompanyController extends Controller
 {
@@ -34,10 +35,13 @@ class CompanyController extends Controller
         $companiesWithout = Company::where('with_contract', 'false')
                                 ->orderBy('name')
                                 ->get();
+        $currentDate = Carbon::now();
+        $currentDate = $currentDate->toDateString();
 
         return view('home')
                     ->with('companiesWithContract', $companiesWith)
-                    ->with('companiesWithoutContract', $companiesWithout);
+                    ->with('companiesWithoutContract', $companiesWithout)
+                    ->with('currentDate', $currentDate);
     }
 
     public function showDetails($id)

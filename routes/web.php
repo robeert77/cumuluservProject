@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InterventionController;
-use App\Models\User;
+use App\Http\Controllers\ReportsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,5 +47,13 @@ Route::get('/company/{id}/intervention', [InterventionController::class, 'showFo
 Route::post('/company/{id}/intervention', [InterventionController::class, 'saveIntervention'])
     ->middleware(['verified', 'auth'])
     ->name('createIntervention');
+
+Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'monthlyReport'])
+    ->middleware(['verified', 'auth'])
+    ->name('monthlyReports');
+
+Route::get('/company/{id}/report/intervention/{date}', [ReportsController::class, 'interventionReport'])
+    ->middleware(['verified', 'auth'])
+    ->name('interventionsReports');
 
 require __DIR__.'/auth.php';
