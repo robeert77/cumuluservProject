@@ -15,9 +15,9 @@
                     <span class="card-title fs-5">Momentan nu exista detalii.</span>
                     <br>
                 @else
-                    <p> {{ $company->details }} </p>
+                    <p class="m-0"> {!! $details !!} </p>
                 @endif
-                <a href="{{ route('editCompany', $company->id) }}" class="btn btn-dark mt-2">Editeaza informatiile</a>
+                <a href="{{ route('editCompany', $company->id) }}" class="btn btn-outline-primary rounded-pill mt-4 mb-2" style="width: 225px;">Editează informațiile</a>
             </div>
         </div>
     </div>

@@ -21,6 +21,35 @@ class CompanyController extends Controller
         return Company::where('id', $id)->get()->first();
     }
 
+    private function addLines($text)
+    {
+        $separators = "\r\n";
+        $text = strtok($text, $separators);
+        $line = strtok($separators);
+
+        while ($line) {
+            $text .= "<br>" . $line;
+            $line = strtok($separators);
+        }
+
+        $separators = "[]";
+        $text = strtok($text, $separators);
+        $line = strtok($separators);
+        $openTag = true;
+
+        while ($line) {
+            if ($openTag) {
+                $text .= "<span class=\"fw-bold\">" . $line;
+            }
+            else {
+                $text .= "</span>" . $line;
+            }
+            $openTag = !$openTag;
+            $line = strtok($separators);
+        }
+        return $text;
+    }
+
     public function add(Request $request)
     {
         $company = new Company;
@@ -32,9 +61,11 @@ class CompanyController extends Controller
         $companiesWith = Company::where('with_contract', 'true')
                                 ->orderBy('name')
                                 ->get();
+
         $companiesWithout = Company::where('with_contract', 'false')
                                 ->orderBy('name')
                                 ->get();
+
         $currentDate = Carbon::now();
         $currentDate = $currentDate->toDateString();
 
@@ -46,8 +77,10 @@ class CompanyController extends Controller
 
     public function showDetails($id)
     {
+        $company = self::getCompanyById($id);
         return view('company-details')
-                    ->with('company', self::getCompanyById($id));
+                    ->with('company', $company)
+                    ->with('details', self::addLines($company->details));
     }
 
     public function editCompany($id) {

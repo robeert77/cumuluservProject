@@ -1,40 +1,35 @@
 <x-app-layout>
-
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                    <div class="card-body p-5">
-
-                        <div class="mb-4 text-sm text-gray-600">
-                            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-                        </div>
-
-                        <!-- Session Status -->
-                        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                        <!-- Validation Errors -->
-                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-
-                        <form method="POST" action="{{ route('password.email') }}">
-                            @csrf
-
-                            <!-- Email Address -->
-                            <div>
-                                <x-label for="email" :value="__('Email')" />
-
-                                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-                            </div>
-
-                            <div class="mt-4">
-                                <x-button class="btn btn-dark w-100 mb-2">
-                                    {{ __('Email Password Reset Link') }}
-                                </x-button>
-                            </div>
-                        </form>
-                    </div>
+    <div class="row d-flex justify-content-center my-5">
+        <div class="col-lg-4 card-shadow bg-white rounded">
+            <div class="py-3 px-3">
+                <div class="mb-4">
+                    {{ __('Ți-ai uitat parola? Nici o problema. Spune-ne adresa ta de email iar noi îți vom trimite un email cu un link prin care
+                    îți vei putea reseta parola.') }}
                 </div>
+
+                <!-- Session Status -->
+                <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                <!-- Validation Errors -->
+                <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+
+                <form method="POST" action="{{ route('password.email') }}">
+                    @csrf
+
+                    <!-- Email Address -->
+                    <div>
+                        <x-label for="email" :value="__('Email')" />
+
+                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                    </div>
+
+                    <div class="mt-4">
+                        <x-button class="btn-outline-primary rounded-pill w-100 mb-2">
+                            {{ __('Trimite Email') }}
+                        </x-button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

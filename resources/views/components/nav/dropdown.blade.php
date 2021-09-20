@@ -1,5 +1,5 @@
 <div class="dropdown">
-    <button @class(['btn', 'dropdown-toggle' => Auth::check()])"btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    <button @class(['btn', 'dropdown-toggle', 'nav-dropdown', 'fs-5', 'pb-0', 'pt-2', 'px-0' => Auth::check()])"btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
         @auth
             {{ $trigger }}
         @else

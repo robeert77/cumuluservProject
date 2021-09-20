@@ -1,0 +1,61 @@
+body {
+    font-family: 'Mukta', serif !important;
+}
+
+.navbar-brand {
+    font-family: 'Bebas Neue', cursive;
+    filter: grayscale(50%);
+}
+
+.navbar-brand:hover {
+    color: white !important;
+}
+
+.navbar-light {
+    background-color: #00698a;
+}
+
+.nav-item a {
+    color: #e6e6e6 !important;
+    border-bottom: 1.5px solid #00698a;
+}
+
+.nav-item a:hover {
+    color: #fff !important;
+    border-bottom: 1.5px solid #fff;
+}
+
+.nav-dropdown {
+    color: #e9e9e9 !important;
+}
+
+.nav-dropdown:hover {
+    color: #fff !important;
+}
+
+.card-shadow {
+    box-shadow: 0 0 8px #d2d2d2;
+    padding: 0;
+}
+
+.btn-outline-primary {
+    border: 1.5px solid #00698a !important;
+    color: #00698a !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #00698a !important;
+    color: #b6dde1 !important;
+}
+
+.btn-outline-secondary {
+    border-width: 1.5px !important;
+}
+
+kbd {
+    padding: 5px 8px !important;
+    margin: 0 4px;
+    background-color: #f7f7f7 !important;
+    box-shadow: 0 0 8px #d2d2d2;
+    color: #292b2c !important;
+}
