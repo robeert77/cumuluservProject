@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InterventionController;
 use App\Http\Controllers\ReportsController;
+use App\Models\Intervention;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +56,16 @@ Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'mont
 Route::get('/company/{id}/report/intervention/{date}', [ReportsController::class, 'interventionReport'])
     ->middleware(['verified', 'auth'])
     ->name('interventionsReports');
+
+Route::get('/json', function() {
+    $jsonArr = [];
+    foreach (Intervention::all() as $intt) {
+        $jsonArr[] = [
+            $intt->day => 'intervention'
+        ];
+    }
+
+    return json_encode($jsonArr);
+});
 
 require __DIR__.'/auth.php';

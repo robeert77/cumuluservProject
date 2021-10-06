@@ -1,64 +1,119 @@
-var Calendar = function(t) {
-    this.divId = t.RenderID ? t.RenderID : '[data-render="calendar"]', this.DaysOfWeek = t.DaysOfWeek ? t.DaysOfWeek : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], this.Months = t.Months ? t.Months : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var e = new Date;
-    this.CurrentMonth = e.getMonth(), this.CurrentYear = e.getFullYear();
-    var r = t.Format;
-    this.f = "string" == typeof r ? r.charAt(0).toUpperCase() : "M"
+let today = new Date();
+let selectedMonth, selectedYear, selectedDay, companyId;
+let months = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+
+window.onload = function() {
+    let currentUrl = (new URL(window.location.href)).pathname;
+    let urlSize = currentUrl.length;
+    companyId = parseInt(currentUrl.substring(9));
+    selectedYear = parseInt(currentUrl.substring(urlSize - 10, urlSize - 6));
+    selectedMonth = parseInt(currentUrl.substring(urlSize - 5, urlSize - 3)) - 1;
+    selectedDay = parseInt(currentUrl.substring(urlSize - 2));
+
+    // generate months options
+    for (let i = 0; i < 12; i++) {
+        let button = createOption(months[i], 'months-options');
+        button.setAttribute('href', reportRoute(selectedYear, i, selectedDay, 'month'));
+    }
+
+    // genereta years options
+    for (let i = today.getFullYear(); i > 2020; i--) {
+        let button = createOption(i, 'years-options');
+        button.setAttribute('href', reportRoute(i, selectedMonth, selectedDay, 'month'));
+    }
+
+    calendarLegend('intervention-id');
+    calendarLegend('product-id');
+    showCalendar(selectedMonth, selectedYear);
 };
-Calendar.prototype.nextMonth = function() {
-    11 == this.CurrentMonth ? (this.CurrentMonth = 0, this.CurrentYear = this.CurrentYear + 1) : this.CurrentMonth = this.CurrentMonth + 1, this.divId = '[data-active="false"] .render', this.showCurrent()
-}, Calendar.prototype.prevMonth = function() {
-    0 == this.CurrentMonth ? (this.CurrentMonth = 11, this.CurrentYear = this.CurrentYear - 1) : this.CurrentMonth = this.CurrentMonth - 1, this.divId = '[data-active="false"] .render', this.showCurrent()
-}, Calendar.prototype.previousYear = function() {
-    this.CurrentYear = this.CurrentYear - 1, this.showCurrent()
-}, Calendar.prototype.nextYear = function() {
-    this.CurrentYear = this.CurrentYear + 1, this.showCurrent()
-}, Calendar.prototype.showCurrent = function() {
-    this.Calendar(this.CurrentYear, this.CurrentMonth)
-}, Calendar.prototype.checkActive = function() {
-    1 == document.querySelector(".months").getAttribute("class").includes("active") ? document.querySelector(".months").setAttribute("class", "months") : document.querySelector(".months").setAttribute("class", "months active"), "true" == document.querySelector(".month-a").getAttribute("data-active") ? (document.querySelector(".month-a").setAttribute("data-active", !1), document.querySelector(".month-b").setAttribute("data-active", !0)) : (document.querySelector(".month-a").setAttribute("data-active", !0), document.querySelector(".month-b").setAttribute("data-active", !1)), setTimeout(function() {
-        document.querySelector(".calendar .header").setAttribute("class", "header active")
-    }, 200), document.querySelector("body").setAttribute("data-theme", this.Months[document.querySelector('[data-active="true"] .render').getAttribute("data-month")].toLowerCase())
-}, Calendar.prototype.Calendar = function(t, e) {
-    "number" == typeof t && (this.CurrentYear = t), "number" == typeof t && (this.CurrentMonth = e);
-    var r = (new Date).getDate(),
-        n = (new Date).getMonth(),
-        a = (new Date).getFullYear(),
-        o = new Date(t, e, 1).getDay(),
-        i = new Date(t, e + 1, 0).getDate(),
-        u = 0 == e ? new Date(t - 1, 11, 0).getDate() : new Date(t, e, 0).getDate(),
-        s = "<span>" + this.Months[e] + " &nbsp; " + t + "</span>",
-        d = '<div class="table">';
-    d += '<div class="row head">';
-    for (var c = 0; c < 7; c++) d += '<div class="cell">' + this.DaysOfWeek[c] + "</div>";
-    d += "</div>";
-    for (var h, l = dm = "M" == this.f ? 1 : 0 == o ? -5 : 2, v = (c = 0, 0); v < 6; v++) {
-        d += '<div class="row">';
-        for (var m = 0; m < 7; m++) {
-            if ((h = c + dm - o) < 1) d += '<div class="cell disable">' + (u - o + l++) + "</div>";
-            else if (h > i) d += '<div class="cell disable">' + l++ + "</div>";
-            else {
-                d += '<div class="cell' + (r == h && this.CurrentMonth == n && this.CurrentYear == a ? " active" : "") + '"><span>' + h + "</span></div>", l = 1
+
+// add the current day to the calendar legend
+function calendarLegend(id) {
+    document.getElementById(id).prepend(document.createTextNode(today.getDate().toString().padStart(2, '0')));
+    document.getElementById(id).setAttribute('href', reportRoute(today.getFullYear(), today.getMonth(), today.getDate(), 'month'));
+}
+
+// create the dropdown options coresponding to parentId
+function createOption(content, parentId) {
+    let li = document.createElement('li');
+    let aTag = document.createElement('a');
+    aTag.appendChild(document.createTextNode(content));
+    aTag.classList.add('dropdown-item');
+    li.appendChild(aTag);
+    document.getElementById(parentId).appendChild(li);
+    return aTag;
+}
+
+// generate the route for a specific intervention or for a specific monthly report
+function reportRoute(year, month, day, reportType) {
+    return '/company/' + companyId + '/report/' + reportType + '/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0')
+            + '-' + day.toString().padStart(2, '0');
+}
+
+function addCssClasses(classes, htmlTag) {
+    for (let i = 0 ; i < classes.length; i++) {
+        htmlTag.classList.add(classes[i]);
+    }
+}
+
+// create the element which will hold the date
+function createHtmlElement(row, content, cssClasses) {
+    let aTag = document.createElement('a');
+    let cellText = document.createTextNode(content.toString().padStart(2, '0'));
+    addCssClasses(cssClasses, aTag);
+    let div = document.createElement('div');
+
+    if (cssClasses[0] != 'another-month' && interventionDays[content] != '') {
+        div.classList.add('d-flex', 'justify-content-evenly', 'px-2');
+        span = document.createElement('span');
+        span.classList.add('intervention-mark', 'w-100');
+        div.appendChild(span);
+    }
+
+    aTag.setAttribute('href', reportRoute(selectedYear, selectedMonth, content, 'intervention'));
+    aTag.appendChild(cellText);
+    aTag.appendChild(div);
+    row.appendChild(aTag);
+}
+
+// return the number of days from the specified month
+function numberOfDays(month, year) {
+    return new Date(year, month + 1, 0).getDate();
+}
+
+// show the calendar for specified month and year
+function showCalendar(month, year) {
+    let firstDay = ((new Date(year, month)).getDay() + 7 - 1) % 7;
+    let totalDays = numberOfDays(month, year);
+    let fromAnotherMonth = numberOfDays(month - 1, year) - firstDay + 1;
+    let currentDay = 1;
+
+    document.getElementById('calendar-month').textContent = months[month];
+    document.getElementById('calendar-year').textContent = year;
+    document.getElementById('calendar-content').innerHTML = "";
+
+    for (let i = 0; i < 6; i++) {
+        let row = document.createElement('div');
+        for (let j = 0; j < 7; j++) {
+            if (i == 0 && j < firstDay || currentDay > totalDays) {
+                createHtmlElement(row, fromAnotherMonth, ['another-month', 'calendar-cell', 'text-decoration-none', 'text-secondary']); // 'disabled in the future'
+                fromAnotherMonth++;
             }
-            c % 7 == 6 && h >= i && (v = 10), c++
+            else {
+                let cellClasses = ['calendar-cell', 'text-decoration-none', 'text-secondary'];
+                if (currentDay == today.getDate() && year == today.getFullYear() && month == today.getMonth()) {
+                    cellClasses.push('active');
+                }
+                else if (currentDay == selectedDay && month == selectedMonth && year == selectedYear) {
+                    cellClasses.push('selected-day');
+                }
+
+                createHtmlElement(row, currentDay, cellClasses);
+                fromAnotherMonth = 1;
+                currentDay++;
+            }
         }
-        d += "</div>"
+        row.classList.add('d-flex', 'fustify-content-between');
+        document.getElementById('calendar-content').appendChild(row);
     }
-    d += "</div>", document.querySelector('[data-render="month-year"]').innerHTML = s, document.querySelector(this.divId).innerHTML = d, document.querySelector(this.divId).setAttribute("data-date", this.Months[e] + " - " + t), document.querySelector(this.divId).setAttribute("data-month", e)
-}, window.onload = function() {
-    var t = new Calendar({
-        RenderID: ".render-a",
-        Format: "M"
-    });
-    t.showCurrent(), t.checkActive();
-    var e = document.querySelectorAll(".header [data-action]");
-    for (i = 0; i < e.length; i++) e[i].onclick = function() {
-        if (document.querySelector(".calendar .header").setAttribute("class", "header"), "true" == document.querySelector(".months").getAttribute("data-loading")) return document.querySelector(".calendar .header").setAttribute("class", "header active"), !1;
-        var e;
-        document.querySelector(".months").setAttribute("data-loading", "true"), this.getAttribute("data-action").includes("prev") ? (t.prevMonth(), e = "left") : (t.nextMonth(), e = "right"), t.checkActive(), document.querySelector(".months").setAttribute("data-flow", e), document.querySelector('.month[data-active="true"]').addEventListener("webkitTransitionEnd", function() {
-            document.querySelector(".months").removeAttribute("data-loading")
-        }), document.querySelector('.month[data-active="true"]').addEventListener("transitionend", function() {
-            document.querySelector(".months").removeAttribute("data-loading")
-        })
-    }
-};
+}

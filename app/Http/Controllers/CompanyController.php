@@ -21,35 +21,6 @@ class CompanyController extends Controller
         return Company::where('id', $id)->get()->first();
     }
 
-    private function addLines($text)
-    {
-        $separators = "\r\n";
-        $text = strtok($text, $separators);
-        $line = strtok($separators);
-
-        while ($line) {
-            $text .= "<br>" . $line;
-            $line = strtok($separators);
-        }
-
-        $separators = "[]";
-        $text = strtok($text, $separators);
-        $line = strtok($separators);
-        $openTag = true;
-
-        while ($line) {
-            if ($openTag) {
-                $text .= "<span class=\"fw-bold\">" . $line;
-            }
-            else {
-                $text .= "</span>" . $line;
-            }
-            $openTag = !$openTag;
-            $line = strtok($separators);
-        }
-        return $text;
-    }
-
     public function add(Request $request)
     {
         $company = new Company;
@@ -80,7 +51,7 @@ class CompanyController extends Controller
         $company = self::getCompanyById($id);
         return view('company-details')
                     ->with('company', $company)
-                    ->with('details', self::addLines($company->details));
+                    ->with('details', $company->details);
     }
 
     public function editCompany($id) {

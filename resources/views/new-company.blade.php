@@ -2,7 +2,7 @@
     <div class="row d-flex justify-content-center my-5">
         <div class="col-lg-4 card-shadow bg-white rounded">
             <div class="title-header pt-3 pb-1">
-                <h3 class="font-weight-normal px-3">Adauga un client</h3>
+                <h3 class="font-weight-normal px-3">Adaugă un client</h3>
             </div>
             <div class="pb-3 px-3">
                 <form method="POST" action="{{ route('addCompany') }}">

@@ -4,6 +4,8 @@
             @csrf
             <div class="row card-shadow px-3 py-5 justify-content-between bg-white rounded">
                 <div class="col-lg-4">
+                    <h3 class="font-weight-normal pb-2">Editează informațiile</h3>
+
                     <div>
                         <x-label for="client" :value="__('Client')" />
 
@@ -45,8 +47,8 @@
                     </div>
                 </div>
                 <div class="col-lg-7 mt-5 mt-lg-0">
-                    <textarea class="form-control border rounded" rows="10" name="details" placeholder="Informații suplimentare">{{ $company->details }}</textarea>
-                    <p class="mt-3 m-0">*Textul cuprins între caracterele <kbd>[</kbd> și <kbd>]</kbd> va deține proprietatea de bold.</p>
+                    <textarea class="form-control border rounded" rows="12" name="details" placeholder="Informații suplimentare">{{ $company->details }}</textarea>
+                    <x-markdown />
                 </div>
             </div>
         </form>

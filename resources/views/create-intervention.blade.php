@@ -33,7 +33,9 @@
                     <div class="mt-4">
                         <x-label for="observations" :value="__('Observații intervenție')" />
 
-                        <textarea class="form-control border rounded" rows="7" id="observations" name="observations" required></textarea>
+                        <textarea class="form-control border rounded fs-6" rows="7" id="observations" name="observations" required></textarea>
+
+                        <x-markdown class="mt-0" />
                     </div>
 
                     <!-- Intervention made by -->
