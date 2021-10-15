@@ -49,6 +49,14 @@ Route::post('/company/{id}/intervention', [InterventionController::class, 'saveI
     ->middleware(['verified', 'auth'])
     ->name('createIntervention');
 
+Route::get('/intervention/{intervention_id}/edit', [InterventionController::class, 'editIntervention'])
+    ->middleware(['verified', 'auth'])
+    ->name('editIntervention');
+    
+Route::post('/intervention/{intervention_id}/edit', [InterventionController::class, 'updateIntervention'])
+    ->middleware(['verified', 'auth'])
+    ->name('editIntervention');
+
 Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'monthlyReport'])
     ->middleware(['verified', 'auth'])
     ->name('monthlyReports');
@@ -56,16 +64,5 @@ Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'mont
 Route::get('/company/{id}/report/intervention/{date}', [ReportsController::class, 'interventionReport'])
     ->middleware(['verified', 'auth'])
     ->name('interventionsReports');
-
-Route::get('/json', function() {
-    $jsonArr = [];
-    foreach (Intervention::all() as $intt) {
-        $jsonArr[] = [
-            $intt->day => 'intervention'
-        ];
-    }
-
-    return json_encode($jsonArr);
-});
 
 require __DIR__.'/auth.php';

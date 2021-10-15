@@ -18,7 +18,6 @@ class ReportsController extends Controller
         foreach ($interventions as $intervention) {
             $days[intval(substr($intervention->day, -2))] = 'intervntion-mark';
         }
-
         return $days;
     }
 
@@ -32,7 +31,7 @@ class ReportsController extends Controller
         $client = Company::find($id);
         $totalTime = DB::select("SELECT SUM(end_at - start_at) AS time FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD')", [$id, $startDate, $endDate]);
         $interventions = DB::select("SELECT end_at - start_at AS time, day FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
-        // dd($interventions);
+
         return view('monthly-reports')
                 ->with('client', $client->name)
                 ->with('id', $id)
@@ -49,13 +48,13 @@ class ReportsController extends Controller
         $endDate->addMonth();
 
         $client = Company::find($id);
-        $intervention = DB::select("SELECT * FROM interventions WHERE day = ? AND company_id = ?", [$reportDate, $id]);
+        $intervention = DB::select("SELECT * FROM interventions WHERE day = ? AND company_id = ? ORDER BY start_at", [$reportDate, $id]);
 
         return view('intervention-report')
                 ->with('client', $client->name)
                 ->with('reportDate', $reportDate)
-                ->with('intervention', $intervention)
-                ->with('id', $id)
+                ->with('interventions', $intervention)
+                ->with('companyId', $id)
                 ->with('markedDays', self::daysToBeMarked($startDate, $endDate, $id));
     }
 }

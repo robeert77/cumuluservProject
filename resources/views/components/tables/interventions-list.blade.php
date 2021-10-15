@@ -3,7 +3,7 @@
         <thead>
             <tr >
                 <th scope="col" class="fs-5 pb-0">#</th>
-                <th scope="col" class="fs-5 pb-0">Data Inervenției</th>
+                <th scope="col" class="fs-5 pb-0">Data Intervenției</th>
                 <th scope="col" class="fs-5 pb-0">Durată</th>
             </tr>
         </thead>

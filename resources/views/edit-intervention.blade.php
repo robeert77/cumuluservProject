@@ -5,35 +5,35 @@
                 <!-- Validation Errors -->
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                <form method="POST" action="{{ route('createIntervention', $id) }}">
+                <form method="POST" action="{{ route('editIntervention', $intervention->id) }}">
                     @csrf
 
                     <!-- Date intervention -->
                     <div>
                         <x-label for="name" :value="__('Data intervenției')" />
 
-                        <x-input id="name" class="block mt-1 w-full" type="date" name="dateIntervention" :value="old('name')" required />
+                        <x-input id="name" class="block mt-1 w-full" type="date" name="dateIntervention" :value="__($intervention->day)" required />
                     </div>
 
                     <!-- Start At -->
                     <div class="mt-4">
                         <x-label for="email" :value="__('Oră început')" />
 
-                        <x-input id="email" class="block mt-1 w-full" type="time" name="startAt" :value="old('email')" required />
+                        <x-input id="email" class="block mt-1 w-full" type="time" name="startAt" :value="__($intervention->start_at)" required />
                     </div>
 
                     <!-- End At -->
                     <div class="mt-4">
                         <x-label for="password" :value="__('Oră sfârșit')" />
 
-                        <x-input id="email" class="block mt-1 w-full" type="time" name="endAt" :value="old('email')" required />
+                        <x-input id="email" class="block mt-1 w-full" type="time" name="endAt" :value="__($intervention->end_at)" required />
                     </div>
 
                     <!-- Observations -->
                     <div class="mt-4">
                         <x-label for="observations" :value="__('Observații intervenție')" />
 
-                        <textarea class="form-control border rounded fs-6" rows="7" id="observations" name="observations" required></textarea>
+                        <textarea class="form-control border rounded fs-6" rows="7" id="observations" name="observations" required>{{ $intervention->observations }}</textarea>
 
                         <x-markdown class="mt-0" />
                     </div>
@@ -41,11 +41,8 @@
                     <!-- Intervention made by -->
                     <div class="mt-4">
                         <select class="form-select" name="users" aria-label="Default select example">\
-                            <option selected value="{{ Auth::user()->id }}"> {{ Auth::user()->name }} </option>
                             @foreach ($users as $user)
-                                @if ($user->name != Auth::user()->name)
-                                    <option value="{{ $user->id }}"> {{ $user->name }} </option>
-                                @endif
+                                <option {{ $user->name == $intervention->mabe_by ? "selected": ""}} value="{{ $user->id }}"> {{ $user->name }} </option>
                             @endforeach
                         </select>
                     </div>

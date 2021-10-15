@@ -56,6 +56,11 @@ kbd {
     border-radius: 25px;
 }
 
+.details-box {
+    color: #444;
+    border: 1.5px solid #ccc;
+}
+
 /* Calendar style sheet */
 
 .calendar {
@@ -118,5 +123,13 @@ kbd {
 
 .product-mark {
     border-bottom: 3px solid #CF6F9B;
+}
 
+.raport-index {
+    text-decoration: none;
+}
+
+.raport-index:hover {
+    text-decoration: underline;
+    color: #555 !important;
 }
