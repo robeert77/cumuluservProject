@@ -7,9 +7,10 @@
                     <div class="pt-3 px-3">
                         <h3 class="mb-3">Raportul lunar pentru {{ $client }} </h3>
                         @if (!empty($interventions))
-                            <x-tables.interventions-list :interventions="$interventions"/>
+                            <x-tables.interventions-table :interventions="$interventions"/>
                         @endif
-                        <h5>Durata totală: <kbd class="rounded-3">{{ date('H', strtotime($totalTime)) }} ore și {{ date('i', strtotime($totalTime)) }}</kbd> minute. </h5>
+                        <h5>Durata totală: <kbd class="rounded-3">{{ $totalTime ? date('H', strtotime($totalTime)) : '00' }}</kbd>
+                            ore și <kbd class="rounded-3">{{ $totalTime ? date('i', strtotime($totalTime)) : '00' }}</kbd> minute. </h5>
                     </div>
                 </div>
             </div>

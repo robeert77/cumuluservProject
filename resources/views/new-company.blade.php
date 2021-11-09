@@ -25,12 +25,10 @@
                     <!-- Contract -->
                     <div class="form-check mt-4">
                         <x-radio-input type="radio" name="contract" id="withContract" value="true" checked />
-
                         <x-label class="form-check-label" for="withContract" :value="__('Cu contract')" />
                     </div>
                     <div class="form-check">
                         <x-radio-input type="radio" name="contract" id="withoutContract" value="false" />
-
                         <x-label class="form-check-label" for="withoutContract" :value="__('Fara contract')" />
                     </div>
 

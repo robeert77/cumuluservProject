@@ -20,7 +20,7 @@ class CreateInterventionsTable extends Migration
             $table->time('start_at')->nullable(false);
             $table->time('end_at')->nullable(false);
             $table->text('observations');
-            $table->string('mabe_by');
+            $table->string('made_by');
             $table->timestamps();
         });
     }

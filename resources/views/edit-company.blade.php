@@ -20,24 +20,16 @@
                     </div>
 
                     <!-- Contract -->
-                    <div class="form-check mt-4">
-                        @if ($company->with_contract)
-                            <x-radio-input type="radio" name="contract" id="withContract" value="true" checked />
-                        @else
-                            <x-radio-input type="radio" name="contract" id="withContract" value="true" />
-                        @endif
+                    <div class="mt-4">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="withContract" name="contract" value="true" {{ $company->with_contract == 1 ? 'checked' : '' }}>
+                            <x-label class="form-check-label" for="withContract" :value="__('Cu contract')" />
+                        </div>
 
-                        <x-label class="form-check-label" for="withContract" :value="__('Cu contract')" />
-                    </div>
-
-                    <div class="form-check">
-                        @if (!$company->with_contract)
-                            <x-radio-input type="radio" name="contract" id="withoutContract" value="false" checked />
-                        @else
-                            <x-radio-input type="radio" name="contract" id="withoutContract" value="false" />
-                        @endif
-
-                        <x-label class="form-check-label" for="withoutContract" :value="__('Fara contract')" />
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="withoutContract" name="contract" value="false" {{ $company->with_contract != 1 ? 'checked' : '' }}>
+                            <x-label class="form-check-label" for="withoutContract" :value="__('Fara contract')" />
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-end mt-4">

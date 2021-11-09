@@ -42,7 +42,7 @@
                     <div class="mt-4">
                         <select class="form-select" name="users" aria-label="Default select example">\
                             @foreach ($users as $user)
-                                <option {{ $user->name == $intervention->mabe_by ? "selected": ""}} value="{{ $user->id }}"> {{ $user->name }} </option>
+                                <option {{ $user->name == $intervention->made_by ? "selected": "" }} value="{{ $user->id }}"> {{ $user->name }} </option>
                             @endforeach
                         </select>
                     </div>

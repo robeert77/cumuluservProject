@@ -118,11 +118,11 @@ kbd {
 }
 
 .intervention-mark {
-    border-bottom: 3px solid #346E9E;
+    border-bottom: 3px solid #346e9e;
 }
 
 .product-mark {
-    border-bottom: 3px solid #CF6F9B;
+    border-bottom: 3px solid #cf6f9b;
 }
 
 .raport-index {
@@ -132,4 +132,46 @@ kbd {
 .raport-index:hover {
     text-decoration: underline;
     color: #555 !important;
+}
+
+/* Products sales table */
+
+.table-input {
+    border: none !important;
+    background-color: transparent !important;
+    resize: none;
+    outline: none;
+}
+
+.add-line {
+    animation-duration: 1s;
+    animation-name: fadein;
+}
+
+.remove-line {
+    opacity: 0%;
+    animation-duration: 0.5s;
+    animation-name: fadeout;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 100%;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 100%;
+        border-color: #d9e2ef;
+    }
+
+    to {
+        opacity: 0%;
+        border-color: transparent;
+    }
 }

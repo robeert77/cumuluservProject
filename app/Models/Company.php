@@ -13,4 +13,9 @@ class Company extends Model
     {
         return $this->hasMany(Intervention::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

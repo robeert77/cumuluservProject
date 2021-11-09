@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InterventionController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ProductsController;
 use App\Models\Intervention;
 
 /*
@@ -52,7 +53,7 @@ Route::post('/company/{id}/intervention', [InterventionController::class, 'saveI
 Route::get('/intervention/{intervention_id}/edit', [InterventionController::class, 'editIntervention'])
     ->middleware(['verified', 'auth'])
     ->name('editIntervention');
-    
+
 Route::post('/intervention/{intervention_id}/edit', [InterventionController::class, 'updateIntervention'])
     ->middleware(['verified', 'auth'])
     ->name('editIntervention');
@@ -61,8 +62,16 @@ Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'mont
     ->middleware(['verified', 'auth'])
     ->name('monthlyReports');
 
-Route::get('/company/{id}/report/intervention/{date}', [ReportsController::class, 'interventionReport'])
+Route::get('/company/{id}/report/day/{date}', [ReportsController::class, 'interventionReport'])
     ->middleware(['verified', 'auth'])
     ->name('interventionsReports');
+
+Route::get('/compnay/{id}/products/sale', [ProductsController::class, 'showTable'])
+    ->middleware(['verified', 'auth'])
+    ->name('productsSale');
+
+Route::post('/compnay/{id}/products/sale', [ProductsController::class, 'saveProducts'])
+    ->middleware(['verified', 'auth'])
+    ->name('productsSave');
 
 require __DIR__.'/auth.php';

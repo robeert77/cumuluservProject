@@ -4,7 +4,7 @@
     </h3>
     <h5 class="mb-3">Ora de început a intervenției: <kbd class="rounded-3"> {{ date('H:i', strtotime($intervention->start_at)) }}</kbd> </h5>
     <h5 class="mb-3">Ora de sfârșit a intervenției: <kbd class="rounded-3"> {{ date('H:i', strtotime($intervention->end_at)) }}</kbd> </h5>
-    <h5 class="mb-3">Intervenție realizată de: <kbd class="rounded-3"> {{ $intervention->mabe_by }} </kbd> </h5>
+    <h5 class="mb-3">Intervenție realizată de: <kbd class="rounded-3"> {{ $intervention->made_by }} </kbd> </h5>
     <h5 class="mb-3">Observații intervenție:</h5>
     <div class="px-2 pt-2 rounded bg-light details-box mb-3">
         {{ Markdown::parse($intervention->observations) }}

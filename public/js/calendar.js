@@ -50,6 +50,7 @@ function reportRoute(year, month, day, reportType) {
             + '-' + day.toString().padStart(2, '0');
 }
 
+// add coresponding css classes ti the coresponding html tag
 function addCssClasses(classes, htmlTag) {
     for (let i = 0 ; i < classes.length; i++) {
         htmlTag.classList.add(classes[i]);
@@ -63,14 +64,16 @@ function createHtmlElement(row, content, cssClasses) {
     addCssClasses(cssClasses, aTag);
     let div = document.createElement('div');
 
-    if (cssClasses[0] != 'another-month' && interventionDays[content] != '') {
+    if (cssClasses[0] != 'another-month') {
         div.classList.add('d-flex', 'justify-content-evenly', 'px-2');
-        span = document.createElement('span');
-        span.classList.add('intervention-mark', 'w-100');
-        div.appendChild(span);
+        for (let i = 0; i < markedDays[content].length; i++) {
+            let span = document.createElement('span');
+            span.classList.add('w-100', markedDays[content][i]);
+            div.appendChild(span);
+        }
     }
 
-    aTag.setAttribute('href', reportRoute(selectedYear, selectedMonth, content, 'intervention'));
+    aTag.setAttribute('href', reportRoute(selectedYear, selectedMonth, content, 'day'));
     aTag.appendChild(cellText);
     aTag.appendChild(div);
     row.appendChild(aTag);

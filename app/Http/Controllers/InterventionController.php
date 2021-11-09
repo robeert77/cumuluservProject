@@ -22,7 +22,7 @@ class InterventionController extends Controller
         $intervention->start_at = $request->input('startAt');
         $intervention->end_at = $request->input('endAt');
         $intervention->observations = $request->input('observations');
-        $intervention->mabe_by = User::find($request->get('users'))->name;
+        $intervention->made_by = User::find($request->get('users'))->name;
         $intervention->save();
     }
 
@@ -47,6 +47,5 @@ class InterventionController extends Controller
         $intervention = Intervention::where('id', $id)->get()->first();
         self::insertInDatabase($intervention, $request);
         return redirect(route('interventionsReports',  ['id' => $intervention->company_id, 'date' => $intervention->day]));
-        // return redirect(route('monthlyReports',  ['id' => $intervention->company_id, 'date' => Carbon::now()->toDateString()]));
     }
 }

@@ -12,12 +12,18 @@ class ReportsController extends Controller
 {
     private function daysToBeMarked($startDate, $endDate, $id)
     {
-        $days = array_fill(0, 32, '');
-        $interventions = DB::select("SELECT day FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
+        $days = array_fill(0, 32, array());
+        $interventions = DB::select("SELECT DISTINCT day FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
+        $products = DB::select("SELECT DISTINCT day FROM products WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
 
         foreach ($interventions as $intervention) {
-            $days[intval(substr($intervention->day, -2))] = 'intervntion-mark';
+            $days[intval(substr($intervention->day, -2))][] = 'intervention-mark';
         }
+
+        foreach($products as $product) {
+            $days[intval(substr($product->day, -2))][] = 'product-mark';
+        }
+
         return $days;
     }
 
@@ -48,12 +54,14 @@ class ReportsController extends Controller
         $endDate->addMonth();
 
         $client = Company::find($id);
-        $intervention = DB::select("SELECT * FROM interventions WHERE day = ? AND company_id = ? ORDER BY start_at", [$reportDate, $id]);
+        $interventions = DB::select("SELECT * FROM interventions WHERE day = ? AND company_id = ? ORDER BY start_at", [$reportDate, $id]);
+        $products = DB::select("SELECT * FROM products WHERE day = ? AND company_id = ? ORDER BY created_at", [$reportDate, $id]);
 
         return view('intervention-report')
                 ->with('client', $client->name)
                 ->with('reportDate', $reportDate)
-                ->with('interventions', $intervention)
+                ->with('interventions', $interventions)
+                ->with('products', $products)
                 ->with('companyId', $id)
                 ->with('markedDays', self::daysToBeMarked($startDate, $endDate, $id));
     }
