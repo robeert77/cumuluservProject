@@ -3028,6 +3028,18 @@ textarea.form-control-lg {
   background-color: #52a1e1;
   border-color: #489be0;
 }
+
+.btn-edit {
+  color: #fff;
+  background-color: #00698a;
+  border-color: #1a7896;
+}
+.btn-edit:hover {
+  color: #fff;
+  background-color: #1a7896;
+  border-color: #26809c;
+}
+
 .btn-check:focus + .btn-primary, .btn-primary:focus {
   color: #000;
   background-color: #52a1e1;

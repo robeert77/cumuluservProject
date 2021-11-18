@@ -1,6 +1,3 @@
-<script>var markedDays = <?= json_encode($markedDays); ?>; </script>
-<script type="text/javascript" src="{{ URL::asset('js/calendar.js') }}"></script>
-
 <div class="col-lg-4 pe-lg-0">
     <div class="d-flex justify-content-center justify-content-lg-start">
         <div class="calendar bg-white px-3 rounded mb-5 mb-lg-0">

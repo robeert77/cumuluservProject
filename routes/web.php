@@ -5,7 +5,8 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InterventionController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ProductsController;
-use App\Models\Intervention;
+use App\Http\Controllers\CompanyProductsController;
+use App\Http\Controllers\SearchProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,60 +19,67 @@ use App\Models\Intervention;
 |
 */
 
-Route::get('/', [CompanyController::class, 'companiesList'])
-    ->middleware(['verified', 'auth'])
-    ->name('home');
+Route::middleware(['verified', 'auth'])->group(function () {
+    // Home page
+    Route::get('/', [CompanyController::class, 'companiesList'])
+        ->name('home');
 
-Route::view('/new-company', 'new-company')
-    ->middleware(['verified', 'auth'])
-    ->name('newCompany');
+    // Add a new comapany
+    Route::view('/new-company', 'new-company')
+        ->name('newCompany');
+    Route::post('/new-company', [CompanyController::class, 'add'])
+        ->name('addCompany');
 
-Route::post('/new-company', [CompanyController::class, 'add'])
-    ->middleware(['verified', 'auth'])
-    ->name('addCompany');
+    // Company details
+    Route::get('/company/{id}/details', [CompanyController::class, 'showDetails'])
+        ->name('detailsCompany');
+    Route::get('/company/{id}/edit', [CompanyController::class, 'editCompany'])
+        ->name('editCompany');
+    Route::post('/company/{id}/edit', [CompanyController::class, 'updateCompany'])
+        ->name('updateCompany');
 
-Route::get('/company/{id}/details', [CompanyController::class, 'showDetails'])
-    ->middleware(['verified', 'auth'])
-    ->name('detailsCompany');
+    // Intervention for a comapany
+    Route::get('/company/{id}/intervention', [InterventionController::class, 'showForm'])
+        ->name('createIntervention');
+    Route::post('/company/{id}/intervention', [InterventionController::class, 'saveIntervention'])
+        ->name('createIntervention');
+    Route::get('/intervention/{intervention_id}/edit', [InterventionController::class, 'editIntervention'])
+        ->name('editIntervention');
+    Route::post('/intervention/{intervention_id}/edit', [InterventionController::class, 'updateIntervention'])
+        ->name('editIntervention');
 
-Route::get('/company/{id}/edit', [CompanyController::class, 'editCompany'])
-    ->middleware(['verified', 'auth'])
-    ->name('editCompany');
+    // Reports for a company
+    Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'monthlyReport'])
+        ->name('monthlyReports');
+    Route::get('/company/{id}/report/day/{date}', [ReportsController::class, 'interventionReport'])
+        ->name('interventionsReports');
 
-Route::post('/company/{id}/edit', [CompanyController::class, 'updateCompany'])
-    ->middleware(['verified', 'auth'])
-    ->name('updateCompany');
+    // Sale products for a company
+    Route::get('/compnay/{id}/products/sale', [CompanyProductsController::class, 'sale'])
+        ->name('saleProductsCompany');
+    Route::post('/compnay/{id}/products/sale', [CompanyProductsController::class, 'saveProducts'])
+        ->name('saveProductsCompany');
 
-Route::get('/company/{id}/intervention', [InterventionController::class, 'showForm'])
-    ->middleware(['verified', 'auth'])
-    ->name('createIntervention');
+    // See all products
+    Route::get('/products', [ProductsController::class, 'showAllProducts'])
+        ->name('showAllProducts');
+    Route::get('/products/search', [SearchProductsController::class, 'query'])
+        ->name('searchProducts');
 
-Route::post('/company/{id}/intervention', [InterventionController::class, 'saveIntervention'])
-    ->middleware(['verified', 'auth'])
-    ->name('createIntervention');
+    // Sale products for anyone
+    Route::get('/products/sale', [ProductsController::class, 'sale'])
+        ->name('saleProducts');
+    Route::post('/products/sale', [ProductsController::class, 'saveProducts'])
+        ->name('saveProducts');
 
-Route::get('/intervention/{intervention_id}/edit', [InterventionController::class, 'editIntervention'])
-    ->middleware(['verified', 'auth'])
-    ->name('editIntervention');
-
-Route::post('/intervention/{intervention_id}/edit', [InterventionController::class, 'updateIntervention'])
-    ->middleware(['verified', 'auth'])
-    ->name('editIntervention');
-
-Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'monthlyReport'])
-    ->middleware(['verified', 'auth'])
-    ->name('monthlyReports');
-
-Route::get('/company/{id}/report/day/{date}', [ReportsController::class, 'interventionReport'])
-    ->middleware(['verified', 'auth'])
-    ->name('interventionsReports');
-
-Route::get('/compnay/{id}/products/sale', [ProductsController::class, 'showTable'])
-    ->middleware(['verified', 'auth'])
-    ->name('productsSale');
-
-Route::post('/compnay/{id}/products/sale', [ProductsController::class, 'saveProducts'])
-    ->middleware(['verified', 'auth'])
-    ->name('productsSave');
+    // Modify a product (delete, edit)
+    Route::get('/product/{id}/delete', [ProductsController::class, 'deleteProduct'])
+        ->middleware(['password.confirm'])
+        ->name('deleteProduct');
+    Route::get('/product/{id}/edit', [ProductsController::class, 'editProduct'])
+        ->name('editProduct');
+    Route::post('/product/{id}/edit', [ProductsController::class, 'updateProduct'])
+        ->name('editProduct');
+});
 
 require __DIR__.'/auth.php';

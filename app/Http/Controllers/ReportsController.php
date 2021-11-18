@@ -37,12 +37,14 @@ class ReportsController extends Controller
         $client = Company::find($id);
         $totalTime = DB::select("SELECT SUM(end_at - start_at) AS time FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD')", [$id, $startDate, $endDate]);
         $interventions = DB::select("SELECT end_at - start_at AS time, day FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
+        $products = DB::select("SELECT * FROM products WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day ASC", [$id, $startDate, $endDate]);
 
         return view('monthly-reports')
                 ->with('client', $client->name)
                 ->with('id', $id)
                 ->with('totalTime', $totalTime[0]->time)
                 ->with('interventions', $interventions)
+                ->with('products', $products)
                 ->with('markedDays', self::daysToBeMarked($startDate, $endDate, $id));
     }
 
@@ -55,7 +57,7 @@ class ReportsController extends Controller
 
         $client = Company::find($id);
         $interventions = DB::select("SELECT * FROM interventions WHERE day = ? AND company_id = ? ORDER BY start_at", [$reportDate, $id]);
-        $products = DB::select("SELECT * FROM products WHERE day = ? AND company_id = ? ORDER BY created_at", [$reportDate, $id]);
+        $products = DB::select("SELECT * FROM products WHERE day = ? AND company_id = ? ORDER BY name", [$reportDate, $id]);
 
         return view('intervention-report')
                 ->with('client', $client->name)

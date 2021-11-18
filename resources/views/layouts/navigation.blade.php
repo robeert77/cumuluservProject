@@ -10,10 +10,10 @@
             @auth
             <ul class="navbar-nav">
                 <li class="nav-item pe-0 pe-md-3">
-                    <a class="nav-link active fs-5 pb-0" aria-current="page" href="{{ route('newCompany') }}">Adaugare client</a>
+                    <a class="nav-link active fs-5 pb-0" aria-current="page" href="{{ route('newCompany') }}">Adăugare client</a>
                 </li>
                 <li class="nav-item pe-0 pe-md-3">
-                    <a class="nav-link active fs-5 pb-0" aria-current="page" href="">Produse</a>
+                    <a class="nav-link active fs-5 pb-0" aria-current="page" href="{{ route('showAllProducts') }}">Produse</a>
                 </li>
                 <li class="nav-item pe-0 pe-md-3">
                     <a class="nav-link active fs-5 pb-0" aria-current="page" href="">Raport Global</a>
@@ -24,8 +24,8 @@
           <div>
               <x-nav.dropdown align="right" width="48">
                   <x-slot name="trigger">
-                        {{ Auth::user()->name }}
-                    </x-slot>
+                      {{ Auth::user()->name }}
+                  </x-slot>
 
                   <x-slot name="content">
                       <!-- Authentication -->

@@ -8,32 +8,53 @@ use Carbon\Carbon;
 
 class ProductsController extends Controller
 {
-    public function showTable($id)
+    public function sale()
     {
-        return view('company-sales')
-                ->with('companyId', $id );
+        return view('sale');
     }
 
-    private function insertInDatabase($index, Request $request, $id)
+    private function insertInDatabase(Request $request, $index, $product)
     {
-        $product = new Product;
-        $product->company_id = $id;
         $product->name = $request->input('name-' . $index);
         $product->serial_number = $request->input('serial-number-' . $index);
         $product->part_number = $request->input('part-number-' . $index);
         $product->day = new Carbon($request->input('date-' . $index));
         $product->price = $request->input('price-' . $index);
-        $product->delivered = ($request->delivered == true);
         $product->save();
     }
 
-    public function saveProducts(Request $request, $id)
+    public function saveProducts(Request $request)
     {
-        $inputLines = (count($request->input()) - 7) / 5;
+        $inputLines = (count($request->input()) - 6) / 5;
         for ($i = 1; $i <= $inputLines; $i++) {
-            self::insertInDatabase($i, $request, $id);
+            $product = new Product;
+            self::insertInDatabase($request, $index, $product);
         }
-        
-        return redirect(route('home'));
+        return redirect(route('showAllProducts'));
+    }
+
+    public function showAllProducts() {
+        return view('show-all-products')
+                ->with('products', Product::orderBy('day', 'desc')->orderBy('created_at', 'desc')->get());
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = Product::find($id);
+        $product->delete();
+        return redirect(route('showAllProducts'));
+    }
+
+    public function editProduct($id)
+    {
+        return view('edit-product')
+                ->with('product', Product::find($id));
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product = Product::find($id);
+        self::insertInDatabase($request, 1, $product);
+        return redirect(route('showAllProducts'));
     }
 }

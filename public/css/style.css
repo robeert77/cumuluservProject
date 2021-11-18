@@ -143,6 +143,14 @@ kbd {
     outline: none;
 }
 
+.delivered-product {
+    border-top: 1.5px solid #e2e3e5;
+    border-left: 1.5px solid #e2e3e5;
+    border-top-left-radius: 2.5px;
+    box-shadow: -3px -3px 8px #ecedee;
+    margin: 0 2.5px;
+}
+
 .add-line {
     animation-duration: 1s;
     animation-name: fadein;

@@ -1,10 +1,11 @@
 <x-app-layout>
-    <div class="w-100 card-shadow bg-white rounded mt-5">
+    <div class="w-100 card-shadow bg-white rounded my-5">
         <div class="py-4 px-3">
-            <form method="POST" action="{{ route('productsSave', $companyId) }}">
+            <form method="POST" action="{{ route('saveProductsCompany', $companyId) }}">
                 @csrf
 
                 <div class="">
+                    <x-js.products-table />
                     <x-tables.products-table />
                 </div>
                 <div class="row justify-content-between mt-2">

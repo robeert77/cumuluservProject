@@ -1,4 +1,4 @@
-<div class="card mb-2">
+<div class="card {{ $loop->last ? "" : "mb-2" }}">
     <div class="card-header bg-white border-0">
         <div class="btn-group">
             <button type="button" class="btn p-0 fs-5 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -8,7 +8,7 @@
                 <li><a class="dropdown-item" href="{{ route('detailsCompany', $company->id) }}">Detalii client</a></li>
                 <li><a class="dropdown-item" href="{{ route('createIntervention', $company->id) }}">Formular intervenție</a></li>
                 <li><a class="dropdown-item" href="{{ route('monthlyReports', ['id' => $company->id, 'date' => $currentDate]) }}">Vizualizare rapoarte</a></li>
-                <li><a class="dropdown-item" href="{{ route('productsSale', $company->id) }}">Vânzare produse</a></li>
+                <li><a class="dropdown-item" href="{{ route('saleProductsCompany', $company->id) }}">Vânzare produse</a></li>
                 <li><a class="dropdown-item" href="#">Formular deplasare</a></li>
                 <li><a class="dropdown-item" href="#">Șterge client</a></li>
             </ul>

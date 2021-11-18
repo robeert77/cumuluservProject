@@ -8,7 +8,7 @@
                 <div class="pb-3 px-3">
                     <div class="container overflow-auto p-0 mt-1 mt-lg-0" style="max-height: 350px;">
                         @foreach ($companiesWithContract as $company)
-                            <x-company-features :company="$company" :currentDate="$currentDate"/>
+                            <x-company-features :company="$company" :currentDate="$currentDate" :loop="$loop" />
                         @endforeach
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="pb-3 px-3">
                     <div class="container overflow-auto px-0 mt-1 mt-lg-0" style="max-height: 350px;">
                         @foreach ($companiesWithoutContract as $company)
-                            <x-company-features :company="$company" :currentDate="$currentDate"/>
+                            <x-company-features :company="$company" :currentDate="$currentDate" :loop="$loop" />
                         @endforeach
                     </div>
                 </div>
