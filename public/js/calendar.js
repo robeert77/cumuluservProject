@@ -1,11 +1,11 @@
 let today = new Date();
-let selectedMonth, selectedYear, selectedDay, companyId;
+let selectedMonth, selectedYear, selectedDay;
 let months = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+// am o variabila companyId, care vine din php. Daca aceasta este 0, atunci insemnca ca folosim calendarule pentru taskuri
 
 window.onload = function() {
     let currentUrl = (new URL(window.location.href)).pathname;
     let urlSize = currentUrl.length;
-    companyId = parseInt(currentUrl.substring(9));
     selectedYear = parseInt(currentUrl.substring(urlSize - 10, urlSize - 6));
     selectedMonth = parseInt(currentUrl.substring(urlSize - 5, urlSize - 3)) - 1;
     selectedDay = parseInt(currentUrl.substring(urlSize - 2));
@@ -16,14 +16,17 @@ window.onload = function() {
         button.setAttribute('href', reportRoute(selectedYear, i, selectedDay, 'month'));
     }
 
-    // genereta years options
+    // generate years options
     for (let i = today.getFullYear(); i > 2020; i--) {
         let button = createOption(i, 'years-options');
         button.setAttribute('href', reportRoute(i, selectedMonth, selectedDay, 'month'));
     }
 
-    calendarLegend('intervention-id');
-    calendarLegend('product-id');
+    // create the legend for our calendar
+    for (let i in legends) {
+        calendarLegend(legends[i].id);
+    }
+
     showCalendar(selectedMonth, selectedYear);
 };
 
@@ -46,11 +49,15 @@ function createOption(content, parentId) {
 
 // generate the route for a specific intervention or for a specific monthly report
 function reportRoute(year, month, day, reportType) {
-    return '/company/' + companyId + '/report/' + reportType + '/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0')
-            + '-' + day.toString().padStart(2, '0');
+    // create a route for tasks
+    if (!companyId) {
+        return '/tasks/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
+    }
+    // we create a route to reports only if we have an id for an company
+    return '/company/' + companyId + '/report/' + reportType + '/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
 }
 
-// add coresponding css classes ti the coresponding html tag
+// add coresponding css classes to the coresponding html tag
 function addCssClasses(classes, htmlTag) {
     for (let i = 0 ; i < classes.length; i++) {
         htmlTag.classList.add(classes[i]);
@@ -99,7 +106,7 @@ function showCalendar(month, year) {
         let row = document.createElement('div');
         for (let j = 0; j < 7; j++) {
             if (i == 0 && j < firstDay || currentDay > totalDays) {
-                createHtmlElement(row, fromAnotherMonth, ['another-month', 'calendar-cell', 'text-decoration-none', 'text-secondary']); // 'disabled in the future'
+                createHtmlElement(row, fromAnotherMonth, ['another-month', 'calendar-cell', 'text-decoration-none', 'text-secondary']);
                 fromAnotherMonth++;
             }
             else {
@@ -116,7 +123,7 @@ function showCalendar(month, year) {
                 currentDay++;
             }
         }
-        row.classList.add('d-flex', 'fustify-content-between');
+        addCssClasses(['d-flex', 'fustify-content-between'], row);
         document.getElementById('calendar-content').appendChild(row);
     }
 }

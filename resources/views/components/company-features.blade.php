@@ -9,7 +9,7 @@
                 <li><a class="dropdown-item" href="{{ route('createIntervention', $company->id) }}">Formular intervenție</a></li>
                 <li><a class="dropdown-item" href="{{ route('monthlyReports', ['id' => $company->id, 'date' => $currentDate]) }}">Vizualizare rapoarte</a></li>
                 <li><a class="dropdown-item" href="{{ route('saleProductsCompany', $company->id) }}">Vânzare produse</a></li>
-                <li><a class="dropdown-item" href="#">Formular deplasare</a></li>
+                <li><a class="dropdown-item" href="{{ route('displacementPdf', $company->id) }}" target="_blank">Formular deplasare</a></li>
                 <li><a class="dropdown-item" href="#">Șterge client</a></li>
             </ul>
         </div>

@@ -28,7 +28,7 @@ class ProductsController extends Controller
         $inputLines = (count($request->input()) - 6) / 5;
         for ($i = 1; $i <= $inputLines; $i++) {
             $product = new Product;
-            self::insertInDatabase($request, $index, $product);
+            self::insertInDatabase($request, $i, $product);
         }
         return redirect(route('showAllProducts'));
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CompanyProductsController;
 use App\Http\Controllers\SearchProductsController;
+use App\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,10 @@ Route::middleware(['verified', 'auth'])->group(function () {
         ->name('editProduct');
     Route::post('/product/{id}/edit', [ProductsController::class, 'updateProduct'])
         ->name('editProduct');
+
+    // Generete a PDF for displacement
+    Route::get('/company/{id}/displacement', [PdfController::class, 'generate'])
+        ->name('displacementPdf');
 });
 
 require __DIR__.'/auth.php';

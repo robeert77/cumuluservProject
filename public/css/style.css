@@ -2,6 +2,28 @@ body {
     font-family: 'Mukta', serif !important;
 }
 
+.home-height {
+    max-height: 700px;
+}
+
+@media screen and (max-height: 900px) {
+    .home-height {
+        max-height: 550px;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .home-height {
+        max-height: 450px;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    .home-height {
+        max-height: 350px;
+    }
+}
+
 .navbar-brand {
     filter: grayscale(50%);
 }
@@ -125,6 +147,10 @@ kbd {
     border-bottom: 3px solid #cf6f9b;
 }
 
+.task-mark {
+    border-bottom: 3px solid #EF972C;
+}
+
 .raport-index {
     text-decoration: none;
 }
@@ -141,6 +167,10 @@ kbd {
     background-color: transparent !important;
     resize: none;
     outline: none;
+}
+
+.invoiced-product {
+    opacity: 0.6;
 }
 
 .delivered-product {

@@ -1,0 +1,119 @@
+/**
+ * Dark theme for adminer, inspired dark version of github
+ * v0.2 by krzmig
+ */
+body {
+	background-color: #090c10;
+	color: #c9d1d9;
+}
+
+a {
+	color: #58a6ff;
+}
+a:visited {
+	color: #4892ea;
+}
+a.active,
+a:hover,
+a:link:hover,
+a:visited:hover {
+	color: #f9826c;
+}
+
+input,
+textarea,
+select,
+button {
+	color: #c9d1d9;
+	background: #21262d;
+	border: 1px solid #30363d;
+	border-radius: 4px;
+	padding: 3px 6px;
+}
+
+code {
+	background: transparent;
+}
+
+thead td,
+thead th,
+th {
+    background: #161b22;
+}
+td,
+th {
+	border-color: #21262d;
+}
+.odd td {
+	background: transparent;
+}
+
+tr.odd {
+	background-color: #0d1117;
+}
+tbody tr:hover td,
+tbody tr:hover th {
+	background-color: #161b22;
+}
+.js .checkable .checked td,
+.js .checkable .checked th {
+    background: #30363d;
+}
+
+#menu h1 {
+	background-color: #0d1117;
+	color: #c9d1d9;
+	border-color: #21262d;
+}
+#logins a,
+#tables a,
+#tables span {
+    background: transparent;
+}
+
+#breadcrumb {
+	background-color: #090c10;
+}
+#content h2 {
+	background: #161b22;
+	color: white;
+}
+
+.error {
+    color: red;
+    background: #322;
+}
+
+.icon {
+	background: #21262d;
+}
+.icon:hover {
+	background-color: #f9826c;
+}
+
+.js .column {
+	background: #161b22;
+}
+.footer {
+	border-image: linear-gradient(rgba(9,12,16,.2),#090c10) 100% 0;
+}
+.footer > div {
+	background-color: #090c10;
+}
+
+.jush {
+    color: silver;
+}
+.jush a {
+    color: darkcyan;
+}
+.jush-bac,
+.jush-php_bac,
+.jush-bra,
+.jush-mssql_bra,
+.jush-sqlite_quo {
+    color: hotpink;
+}
+.jush-num, .jush-clr {
+    color: orchid;
+}

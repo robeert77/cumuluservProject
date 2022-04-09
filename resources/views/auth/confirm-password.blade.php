@@ -16,10 +16,11 @@
                     <div>
                         <x-label for="password" :value="__('Parolă')" />
 
-                        <x-input id="password" class="block mt-1 w-full"
+                        <x-input id="password" class="mt-1"
                                         type="password"
                                         name="password"
-                                        required autocomplete="current-password" />
+                                        required autocomplete="current-password"
+                                        autofocus />
                     </div>
 
                     <div class="mt-4">
