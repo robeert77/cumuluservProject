@@ -29,11 +29,11 @@ class CompanyController extends Controller
     }
 
     public function companiesList() {
-        $companiesWith = Company::where('with_contract', 'true')
+        $companiesWith = Company::where('with_contract', 1)
                                 ->orderBy('name')
                                 ->get();
 
-        $companiesWithout = Company::where('with_contract', 'false')
+        $companiesWithout = Company::where('with_contract', 0)
                                 ->orderBy('name')
                                 ->get();
 

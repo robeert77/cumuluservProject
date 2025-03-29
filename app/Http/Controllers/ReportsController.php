@@ -13,8 +13,8 @@ class ReportsController extends Controller
     private function daysToBeMarked($startDate, $endDate, $id)
     {
         $days = array_fill(0, 32, array());
-        $interventions = DB::select("SELECT DISTINCT day FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
-        $products = DB::select("SELECT DISTINCT day FROM products WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
+        $interventions = DB::select("SELECT DISTINCT day FROM interventions WHERE company_id = ? AND day >= ? AND day < ? ORDER BY day", [$id, $startDate, $endDate]);
+        $products = DB::select("SELECT DISTINCT day FROM products WHERE company_id = ? AND day >= ? AND day < ? ORDER BY day", [$id, $startDate, $endDate]);
 
         foreach ($interventions as $intervention) {
             $days[intval(substr($intervention->day, -2))][] = 'intervention-mark';
@@ -35,9 +35,9 @@ class ReportsController extends Controller
         $endDate->addMonth();
 
         $client = Company::find($id);
-        $totalTime = DB::select("SELECT SUM(end_at - start_at) AS time FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD')", [$id, $startDate, $endDate]);
-        $interventions = DB::select("SELECT end_at - start_at AS time, day FROM interventions WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day", [$id, $startDate, $endDate]);
-        $products = DB::select("SELECT * FROM products WHERE company_id = ? AND day >= to_date(?, 'YYYY-MM-DD') AND day < to_date(?, 'YYYY-MM-DD') ORDER BY day ASC", [$id, $startDate, $endDate]);
+        $totalTime = DB::select("SELECT SUM(end_at - start_at) AS time FROM interventions WHERE company_id = ? AND day >= ? AND day < ?", [$id, $startDate, $endDate]);
+        $interventions = DB::select("SELECT end_at - start_at AS time, day FROM interventions WHERE company_id = ? AND day >= ? AND day < ? ORDER BY day", [$id, $startDate, $endDate]);
+        $products = DB::select("SELECT * FROM products WHERE company_id = ? AND day >= ? AND day < ? ORDER BY day ASC", [$id, $startDate, $endDate]);
 
         return view('monthly-reports')
                 ->with('client', $client->name)
