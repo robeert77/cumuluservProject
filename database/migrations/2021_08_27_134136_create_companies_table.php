@@ -16,10 +16,13 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone_number')->nullable();
-            $table->boolean('with_contract');
-            $table->text('details')->nullable();
-            $table->integer('nr_next_movement')->default(1);
+            $table->string('vat');
+            $table->tinyInteger('type');
+            $table->boolean('with_contract')->default(true);
+            $table->tinyInteger('status');
+            $table->text('address');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('companies');
+        Schema::dropIfExists('companies');
     }
 }
