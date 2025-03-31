@@ -4,66 +4,64 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
-use Carbon\Carbon;
 
 class CompanyController extends Controller
 {
-    private function insertInDatabase(&$company, $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $company->name = $request->input('client');
-        $company->phone_number = $request->input('phoneNumber');
-        $company->with_contract = ($request->contract === 'true');
-        $company->save();
+        $companies = Company::paginate(10);
+
+        return view('companies.index', compact('companies'));
     }
 
-    private function getCompanyById($id)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return Company::where('id', $id)->get()->first();
+        //
     }
 
-    public function add(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        $company = new Company;
-        self::insertInDatabase($company, $request);
-        return redirect(route('home'));
+        //
     }
 
-    public function companiesList() {
-        $companiesWith = Company::where('with_contract', 1)
-                                ->orderBy('name')
-                                ->get();
-
-        $companiesWithout = Company::where('with_contract', 0)
-                                ->orderBy('name')
-                                ->get();
-
-        $currentDate = Carbon::now();
-        $currentDate = $currentDate->toDateString();
-
-        return view('home')
-                    ->with('companiesWithContract', $companiesWith)
-                    ->with('companiesWithoutContract', $companiesWithout)
-                    ->with('currentDate', $currentDate);
-    }
-
-    public function showDetails($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $company = self::getCompanyById($id);
-        return view('company-details')
-                    ->with('company', $company)
-                    ->with('details', $company->details);
+        //
     }
 
-    public function editCompany($id) {
-        return view('edit-company')
-                    ->with('company', self::getCompanyById($id));
-    }
-
-    public function updateCompany(Request $request, $id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $company = Company::find($id);
-        $company->details = $request->details;
-        self::insertInDatabase($company, $request);
-        return redirect(route('detailsCompany', $id));
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
