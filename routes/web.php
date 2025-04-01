@@ -22,24 +22,10 @@ use App\Http\Controllers\PdfController;
 
 Route::middleware(['verified', 'auth'])->group(function () {
     // Home page
-    Route::get('/', [CompanyController::class, 'companiesList'])
+    Route::get('/', [CompanyController::class, 'index'])
         ->name('home');
 
-
     Route::resource('companies', CompanyController::class);
-    // // Add a new comapany
-    // Route::view('/new-company', 'new-company')
-    //     ->name('newCompany');
-    // Route::post('/new-company', [CompanyController::class, 'add'])
-    //     ->name('addCompany');
-
-    // // Company details
-    // Route::get('/company/{id}/details', [CompanyController::class, 'showDetails'])
-    //     ->name('detailsCompany');
-    // Route::get('/company/{id}/edit', [CompanyController::class, 'editCompany'])
-    //     ->name('editCompany');
-    // Route::post('/company/{id}/edit', [CompanyController::class, 'updateCompany'])
-    //     ->name('updateCompany');
 
     // Intervention for a comapany
     Route::get('/company/{id}/intervention', [InterventionController::class, 'showForm'])

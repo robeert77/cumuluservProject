@@ -22,7 +22,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
@@ -30,7 +30,28 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'      => 'required|string|max:255',
+            'vat'       => 'required|string|max:20',
+            'type'      => 'required|integer',
+            'address'   => 'required|string',
+            'phone'     => 'nullable|string|max:20',
+            'email'     => 'nullable|email|max:255',
+        ]);
+
+        $company = Company::create([
+            'name'      => $request->input('name'),
+            'vat'       => $request->input('vat'),
+            'type'      => $request->input('type'),
+            'status'    => 1,
+            'address'   => $request->input('address'),
+            'phone'     => $request->input('phone'),
+            'email'     => $request->input('email'),
+        ]);
+
+        return redirect()
+                ->route('companies.index')
+                ->with('success', 'Companie creata cu succes!');
     }
 
     /**
@@ -62,6 +83,18 @@ class CompanyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $company = Company::findOrFail($id);
+
+        if ($company) {
+            $company->delete();
+
+            return redirect()
+                    ->route('companies.index')
+                    ->with('success', 'Compania a fost stearsa cu succes.');
+        }
+
+        return redirect()
+                ->route('companies.index')
+                ->with('error', 'Compania nu a fost gasita.');
     }
 }
