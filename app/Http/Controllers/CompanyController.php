@@ -50,8 +50,8 @@ class CompanyController extends Controller
         ]);
 
         return redirect()
-                ->route('companies.index')
-                ->with('success', 'Companie creata cu succes!');
+            ->route('companies.index')
+            ->with('success', 'Companie creata cu succes!');
     }
 
     /**
@@ -67,7 +67,9 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $company = Company::findOrFail($id);
+
+        return view('companies.edit', compact('company'));
     }
 
     /**
@@ -75,7 +77,22 @@ class CompanyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'vat' => 'required|string|max:50',
+            'type' => 'required|integer',
+            'with_contract' => 'boolean',
+            'address' => 'required|string',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+        ]);
+
+        $company = Company::findOrFail($id);
+        $company->update($validated);
+
+        return redirect()
+            ->route('companies.index')
+            ->with('success', 'Company updated successfully.');
     }
 
     /**
@@ -89,12 +106,12 @@ class CompanyController extends Controller
             $company->delete();
 
             return redirect()
-                    ->route('companies.index')
-                    ->with('success', 'Compania a fost stearsa cu succes.');
+                ->route('companies.index')
+                ->with('success', 'Compania a fost stearsa cu succes.');
         }
 
         return redirect()
-                ->route('companies.index')
-                ->with('error', 'Compania nu a fost gasita.');
+            ->route('companies.index')
+            ->with('error', 'Compania nu a fost gasita.');
     }
 }

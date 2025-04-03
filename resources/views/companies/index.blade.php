@@ -29,11 +29,12 @@
                         <td>{{ $company->contract ? 'Da' : 'Nu' }}</td>
                         <td>{{ $company->phone }}</td>
                         <td>{{ $company->email }}</td>
-                        <td>
+                        <td class="d-flex align-items-center gap-2">
+                            <a href="{{ route('companies.edit', $company->id) }}" class="btn"><x-icon name="pencil" color="primary"></x-icon></a>
                             <form action="{{ route('companies.destroy', $company->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this company?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn"><i class="bi bi-trash3 text-danger"></i></button>
+                                <button type="submit" class="btn"><x-icon name="trash3" color="danger"></x-icon></button>
                             </form>
                         </td>
                     </tr>

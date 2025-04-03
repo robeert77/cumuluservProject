@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="row d-flex justify-content-center my-5">
         <div class="col-lg-4 card-shadow bg-white rounded">
             <div class="py-3 px-3">
@@ -13,23 +15,23 @@
 
                     <!-- Email Address -->
                     <div>
-                        <x-label for="email" :value="__('Email')" />
+                        <x-form.label for="email" :value="__('Email')" />
 
-                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
+                        <x-form.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
                     </div>
 
                     <!-- Password -->
                     <div class="mt-4">
-                        <x-label for="password" :value="__('Parolă')" />
+                        <x-form.label for="password" :value="__('Parolă')" />
 
-                        <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                        <x-form.input id="password" class="block mt-1 w-full" type="password" name="password" required />
                     </div>
 
                     <!-- Confirm Password -->
                     <div class="mt-4">
-                        <x-label for="password_confirmation" :value="__('Confirmă parolă')" />
+                        <x-form.label for="password_confirmation" :value="__('Confirmă parolă')" />
 
-                        <x-input id="password_confirmation" class="block mt-1 w-full"
+                        <x-form.input id="password_confirmation" class="block mt-1 w-full"
                                             type="password"
                                             name="password_confirmation" required />
                     </div>
@@ -43,4 +45,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
