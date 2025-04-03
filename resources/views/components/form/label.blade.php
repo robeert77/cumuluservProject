@@ -1,0 +1,1 @@
+<label for="{{ $for }}" class="form-label">{{ $value }}</label>

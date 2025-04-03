@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="row d-flex justify-content-center my-5">
         <div class="col-lg-4 card-shadow bg-white rounded">
             <div class="py-3 px-3">
@@ -14,9 +16,9 @@
 
                     <!-- Password -->
                     <div>
-                        <x-label for="password" :value="__('Parolă')" />
+                        <x-form.label for="password" :value="__('Parolă')" />
 
-                        <x-input id="password" class="mt-1"
+                        <x-form.input id="password" class="mt-1"
                                         type="password"
                                         name="password"
                                         required autocomplete="current-password"
@@ -32,4 +34,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
