@@ -1,18 +1,17 @@
-<input 
-    id="{{ $id }}" 
-    name="{{ $name }}" 
-    type="{{ $type }}" 
+<input
+    id="{{ $id }}"
+    name="{{ $name }}"
+    type="{{ $type }}"
+    value="{{ $value }}"
 
-    @if ($type === 'checkbox')
-        value="1" 
-        @if($checked) checked @endif
-        class="form-check-input"
+    @if ($type === 'checkbox' || $type === 'radio')
+        @if ($checked) checked @endif
+        {{ $attributes->merge(['class' => 'form-check-input']) }}
     @else
-        value="{{ $value }}" 
-        placeholder="{{ $placeholder }}" 
-        class="form-control" 
+        placeholder="{{ $placeholder }}"
+        {{ $attributes->merge(['class' => 'form-control']) }}
         @if ($required) required @endif
     @endif
-   
+
     @if ($disabled) disabled @endif
 >

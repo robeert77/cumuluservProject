@@ -6,16 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Input extends Component
+class Textarea extends Component
 {
     public $id;
     public $name;
-    public $type;
-    public $value;
+    public $text;
+    public $rows;
     public $placeholder;
     public $required;
     public $disabled;
-    public $checked;
 
     /**
      * Create a new component instance.
@@ -23,21 +22,19 @@ class Input extends Component
     public function __construct(
         $id,
         $name,
-        $type = 'text',
-        $value = null,
+        $text = null,
+        $rows = 3,
         $placeholder = null,
         $required = false,
         $disabled = false,
-        $checked = false
     ) {
         $this->id = $id;
         $this->name = $name;
-        $this->type = $type;
-        $this->value = $this->type !== 'checkbox' ? $value : 1;
+        $this->text = $text;
+        $this->rows = $rows;
         $this->placeholder = $placeholder;
         $this->required = $required;
         $this->disabled = $disabled;
-        $this->checked = $checked;
     }
 
     /**
@@ -45,6 +42,6 @@ class Input extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.form.input');
+        return view('components.form.textarea');
     }
 }
