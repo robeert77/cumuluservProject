@@ -6,20 +6,20 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Icon extends Component
+class Button extends Component
 {
-    public $name;
-    public $size;
-    public $color;
+    public string $type;
+    public string $color;
+    public bool $outline;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $size = '6', $color = 'black')
+    public function __construct(string $type = 'submit', string $color = 'primary', bool $outline = false)
     {
-        $this->name = $name;
-        $this->size = $size;
+        $this->type = $type;
         $this->color = $color;
+        $this->outline = $outline;
     }
 
     /**
@@ -27,6 +27,6 @@ class Icon extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.icon');
+        return view('components.button');
     }
 }

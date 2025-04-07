@@ -1,102 +1,84 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row d-flex justify-content-center my-5">
-        <div class="col-lg-8 card-shadow bg-white rounded">
-            <div class="title-header pt-3 mb-4">
-                <h3 class="font-weight-normal px-3">{{ __('Add Client') }}</h3>
-            </div>
+    @component('components.page.form-wrapper', ['title' => __('Add Company')])
+        <form method="POST" action="{{ route('companies.store') }}">
+            @csrf
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <strong>Whoops! Something went wrong.</strong>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+            <div class="row">
+                <div class="col-md-4">
+                    <x-form.label for="name" :value="__('Company')" />
+                    <x-form.input id="name" type="text" name="name" :value="old('name')" required autofocus />
                 </div>
-            @endif
 
-            <div class="pb-3 px-3">
-                <form method="POST" action="{{ route('companies.store') }}">
-                    @csrf
+                <div class="col-md-4">
+                    <x-form.label for="type" :value="__('Company Type')" />
+                    <x-form.input id="type" type="number" name="type" :value="old('type')" required />
+                </div>
 
-                    <div class="row">
-                        <div class="col-4">
-                            <x-form.label for="name" :value="__('Company')" />
-                            <x-form.input id="name" type="text" name="name" :value="old('name')" required autofocus />
-                        </div>
+                <div class="col-md-4">
+                    <x-form.label for="vat" :value="__('VAT')" />
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-light" type="button" id="button-vat-check">
+                            <x-icon name="arrow-right-circle" color="secondary"></x-icon>
+                        </button>
+                        <x-form.input id="vat" type="text" name="vat" :value="old('vat')" aria-describedby="button-vat-check" required />
+                    </div>
+                </div>
 
-                        <div class="col-4">
-                            <x-form.label for="type" :value="__('Company Type')" />
-                            <x-form.input id="type" type="number" name="type" :value="old('type')" required />
-                        </div>
+                <div class="col-md-4">
+                    <x-form.label for="address" :value="__('Address')" />
+                    <x-form.input id="address" type="text" name="address" :value="old('address')" required />
+                </div>
 
-                        <div class="col-4">
-                            <x-form.label for="vat" :value="__('VAT')" />
-                            <div class="input-group mb-3">
-                                <button class="btn btn-outline-light" type="button" id="button-vat-check">
-                                    <x-icon name="arrow-right-circle" color="secondary"></x-icon>
-                                </button>
-                                <x-form.input id="vat" type="text" name="vat" :value="old('vat')" aria-describedby="button-vat-check" required />
-                            </div>
-                        </div>
+                <div class="col-md-4">
+                    <x-form.label  for="phone" :value="__('Phone')" />
+                    <x-form.input id="phone" type="tel" name="phone" :value="old('phone')" />
+                </div>
 
-                        <div class="col-4">
-                            <x-form.label for="address" :value="__('Address')" />
-                            <x-form.input id="address" type="text" name="address" :value="old('address')" required />
-                        </div>
+                <div class="col-md-4">
+                    <x-form.label  for="email" :value="__('Email')" />
+                    <x-form.input id="email" type="email" name="email" :value="old('email')" />
+                </div>
 
-                        <div class="col-4">
-                            <x-form.label  for="phone" :value="__('Phone')" />
-                            <x-form.input id="phone" type="tel" name="phone" :value="old('phone')" />
-                        </div>
-
-                        <div class="col-4">
-                            <x-form.label  for="email" :value="__('Email')" />
-                            <x-form.input id="email" type="email" name="email" :value="old('email')" />
-                        </div>
-
-                        <div class="col-4 mt-3">
-                            <x-form.label for="with_contract" :value="__('Contract Collaboration')" />
-                            <br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input"
-                                       type="radio"
-                                       name="with_contract"
-                                       id="with_contract_1"
-                                       value="1"
-                                    {{ old('with_contract') === '1' ? 'checked' : '' }}>
-                                <x-form.label class="form-check-label" for="status_active" :value="__('Yes')" />
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input"
-                                       type="radio"
-                                       name="with_contract"
-                                       id="with_contract_0"
-                                       value="0"
-                                    {{ old('with_contract') === '0' ? 'checked' : '' }}>
-                                <x-form.label class="form-check-label" for="status_inactive" :value="__('No')" />
-                            </div>
-                        </div>
-
-                        <hr class="my-3">
-
-                        <div class="col-12">
-                            <x-form.label for="details" :value="__('Company Details')" />
-                            <x-form.textarea id="details" rows="10" name="details" />
-                        </div>
+                <div class="col-12 mt-3">
+                    <x-form.label for="with_contract" :value="__('Contract Collaboration')" />
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input"
+                               type="radio"
+                               name="with_contract"
+                               id="with_contract_1"
+                               value="1"
+                            {{ old('with_contract') === '1' ? 'checked' : '' }}>
+                        <x-form.label class="form-check-label" for="status_active" :value="__('Yes')" />
                     </div>
 
-                    <div class="flex items-center justify-end mt-3">
-                        <x-button class="btn-outline-primary rounded-pill w-100 mb-2">
-                            {{ __('Adaugare client') }}
-                        </x-button>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input"
+                               type="radio"
+                               name="with_contract"
+                               id="with_contract_0"
+                               value="0"
+                            {{ old('with_contract') === '0' ? 'checked' : '' }}>
+                        <x-form.label class="form-check-label" for="status_inactive" :value="__('No')" />
                     </div>
-                </form>
+                </div>
+
+                <hr class="my-3">
+
+                <div class="col-12">
+                    <x-form.label for="details" :value="__('Company Details')" />
+                    <x-form.textarea id="details" rows="10" name="details" />
+                </div>
             </div>
-        </div>
-    </div>
+
+            <div class="d-flex items-center justify-content-end mt-3">
+                <a class="me-3" href="{{ route('companies.index') }}">
+                    <x-button class="px-4" type="button" color="danger" outline>Cancel</x-button>
+                </a>
+                <x-button class="px-4" color="primary">Save</x-button>
+            </div>
+        </form>
+    @endcomponent
 @endsection
