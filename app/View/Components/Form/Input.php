@@ -21,25 +21,25 @@ class Input extends Component
      * Create a new component instance.
      */
     public function __construct(
-        $id, 
-        $name, 
-        $type = 'text', 
-        $value = null, 
-        $placeholder = null, 
-        $required = false, 
-        $disabled = false, 
+        $id,
+        $name,
+        $type = 'text',
+        $value = null,
+        $placeholder = null,
+        $required = false,
+        $disabled = false,
         $checked = false
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->type = $type;
-        $this->value = $value;
+        $this->value = $this->type !== 'checkbox' ? $value : 1;
         $this->placeholder = $placeholder;
         $this->required = $required;
         $this->disabled = $disabled;
         $this->checked = $checked;
     }
-    
+
     /**
      * Get the view / contents that represent the component.
      */

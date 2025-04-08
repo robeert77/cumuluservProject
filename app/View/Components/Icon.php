@@ -15,7 +15,7 @@ class Icon extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $size = '1x', $color = 'black')
+    public function __construct($name, $size = '6', $color = 'black')
     {
         $this->name = $name;
         $this->size = $size;

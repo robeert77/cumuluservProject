@@ -10,7 +10,7 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $companies = Company::paginate(10);
 
@@ -37,6 +37,7 @@ class CompanyController extends Controller
             'address'   => 'required|string',
             'phone'     => 'nullable|string|max:20',
             'email'     => 'nullable|email|max:255',
+            'details'   => 'nullable|string|min:10',
         ]);
 
         $company = Company::create([
@@ -47,11 +48,12 @@ class CompanyController extends Controller
             'address'   => $request->input('address'),
             'phone'     => $request->input('phone'),
             'email'     => $request->input('email'),
+            'details'   => $request->input('details'),
         ]);
 
         return redirect()
             ->route('companies.index')
-            ->with('success', 'Companie creata cu succes!');
+            ->with('success', 'Company created successfully!');
     }
 
     /**
@@ -78,13 +80,13 @@ class CompanyController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'vat' => 'required|string|max:50',
-            'type' => 'required|integer',
-            'with_contract' => 'boolean',
-            'address' => 'required|string',
-            'phone' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'name'      => 'required|string|max:255',
+            'vat'       => 'required|string|max:20',
+            'type'      => 'required|integer',
+            'address'   => 'required|string',
+            'phone'     => 'nullable|string|max:20',
+            'email'     => 'nullable|email|max:255',
+            'details'   => 'nullable|string|min:10',
         ]);
 
         $company = Company::findOrFail($id);
@@ -107,11 +109,11 @@ class CompanyController extends Controller
 
             return redirect()
                 ->route('companies.index')
-                ->with('success', 'Compania a fost stearsa cu succes.');
+                ->with('success', 'Company was deleted successfully.');
         }
 
         return redirect()
             ->route('companies.index')
-            ->with('error', 'Compania nu a fost gasita.');
+            ->with('error', 'Company not found.');
     }
 }
