@@ -10,8 +10,10 @@
             </a>
         </div>
 
-        <div class="d-flex align-items-center gap-3 mt-3">
-            <x-icon name="chevron-down" color="secondary" size="4" data-bs-toggle="collapse" data-bs-target="#filters_section" aria-expanded="false" aria-controls="filters_section"/>
+        <div class="d-flex align-items-center gap-1 mt-3">
+            <x-button>
+                <x-icon name="chevron-down" color="secondary" size="4" data-bs-toggle="collapse" data-bs-target="#filters_section" aria-expanded="false" aria-controls="filters_section"/>
+            </x-button>
             <hr class="flex-grow-1">
         </div>
 

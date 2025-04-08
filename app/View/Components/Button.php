@@ -15,7 +15,7 @@ class Button extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $type = 'submit', string $color = 'primary', bool $outline = false)
+    public function __construct(string $type = 'submit', string $color = '', bool $outline = false)
     {
         $this->type = $type;
         $this->color = $color;
