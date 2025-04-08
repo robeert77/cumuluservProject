@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Cumuluserv') }}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta">
@@ -17,7 +17,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap" rel="stylesheet">
 
         <!-- fav icon -->
-        <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" />
+        <link rel="icon" type="image/png" href="{{ asset('img/favicon.ico') }}" />
 
         <!-- Own css file -->
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -29,11 +29,11 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="bg-light">
-        @include('layouts.navigation')
+        @include('layouts.nav')
 
         <!-- Page Content -->
         <main class="container">
-            {{ $slot }}
+            @yield('content')
         </main>
     </body>
 </html>

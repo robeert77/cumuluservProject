@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="row d-flex justify-content-center my-5">
         <div class="col-lg-4 card-shadow bg-white rounded">
             <div class="title-header pt-3 pb-1">
@@ -16,16 +18,16 @@
 
                     <!-- Email Address -->
                     <div class="mt-3">
-                        <x-label for="email" :value="__('Email')"/>
+                        <x-form.label for="email" :value="__('Email')"/>
 
-                        <x-input id="email" class="" type="email" name="email" :value="old('email')" required autofocus />
+                        <x-form.input id="email" class="" type="email" name="email" :value="old('email')" required autofocus />
                     </div>
 
                     <!-- Password -->
                     <div class="mt-4">
-                        <x-label for="password" :value="__('Parola')" />
+                        <x-form.label for="password" :value="__('Parola')" />
 
-                        <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                        <x-form.input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
                     </div>
 
                     <!-- Remember Me -->
@@ -51,4 +53,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
