@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Company;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompanyFilterRequest extends FormRequest
@@ -23,7 +24,7 @@ class CompanyFilterRequest extends FormRequest
     {
         return [
             'name'      => 'nullable|string|max:255',
-            'status'    => 'nullable|in:0,1',
+            'status'    => 'nullable|in:' . implode(',', array_keys(Company::$STATUSES_ARR)),
         ];
     }
 }
