@@ -2,50 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Models\Company;
 use App\Models\Intervention;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class InterventionController extends Controller
 {
-    public function showForm($id)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request, Company $company)
     {
-        return view('create-intervention')
-                ->with('users', User::all())
-                ->with('id', $id);
+        $interventions = $company->interventions()->filters($request->all())->paginate(10);
+
+        $users_arr = User::pluck('name', 'id');
+
+        return view('companies.interventions.index',
+            compact('company', 'interventions', 'users_arr'));
     }
 
-    private function insertInDatabase($intervention, $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Company $company)
     {
-        $intervention->day = $request->input('dateIntervention');
-        $intervention->start_at = $request->input('startAt');
-        $intervention->end_at = $request->input('endAt');
-        $intervention->observations = $request->input('observations');
-        $intervention->made_by = User::find($request->get('users'))->name;
-        $intervention->save();
+        $users_arr = User::pluck('name', 'id');
+
+        return view('companies.interventions.create',
+            compact('company', 'users_arr'));
     }
 
-    public function saveIntervention(Request $request, $id)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request, Company $company)
     {
-        $intervention = new Intervention;
-        $intervention->company_id = $id;
-        self::insertInDatabase($intervention, $request, $id);
-        return redirect(route('home'));
+        $validated = $request->validate((new Intervention())->validationRules());
+
+        $company->interventions()->create($validated);
+
+        return redirect()
+            ->route('companies.interventions.index', $company)
+            ->with('success', 'Intervention created successfully!');
     }
 
-    public function editIntervention($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $intervention = Intervention::where('id', $id)->get()->first();
-        return view('edit-intervention')
-                ->with('users', User::all())
-                ->with('intervention', $intervention);
+        //
     }
 
-    public function updateIntervention(Request $request, $id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $intervention = Intervention::where('id', $id)->get()->first();
-        self::insertInDatabase($intervention, $request);
-        return redirect(route('interventionsReports',  ['id' => $intervention->company_id, 'date' => $intervention->day]));
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Company $company, Intervention $intervention)
+    {
+        $intervention->delete();
+
+        return redirect()
+            ->route('companies.interventions.index', $company)
+            ->with('success', 'Intervention was deleted successfully.');
     }
 }

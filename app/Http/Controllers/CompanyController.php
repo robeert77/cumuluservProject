@@ -14,11 +14,11 @@ class CompanyController extends Controller
     {
         $companies = Company::filters($request->all())->paginate(10);
 
-        return view('companies.index', [
-            'companies'     => $companies,
-            'statuses_arr'  => Company::$STATUSES_ARR,
-            'types_arr'     => Company::$TYPES_ARR,
-        ]);
+        $statuses_arr = Company::$STATUSES_ARR;
+        $types_arr = Company::$TYPES_ARR;
+
+        return view('companies.index',
+            compact('companies', 'statuses_arr', 'types_arr'));
     }
 
     /**
@@ -26,10 +26,11 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('companies.create', [
-            'statuses_arr'  => Company::$STATUSES_ARR,
-            'types_arr'     => Company::$TYPES_ARR,
-        ]);
+        $statuses_arr = Company::$STATUSES_ARR;
+        $types_arr = Company::$TYPES_ARR;
+
+        return view('companies.create',
+            compact('statuses_arr', 'types_arr'));
     }
 
     /**
@@ -57,15 +58,13 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Company $company)
     {
-        $company = Company::findOrFail($id);
+        $statuses_arr = Company::$STATUSES_ARR;
+        $types_arr = Company::$TYPES_ARR;
 
-        return view('companies.edit', [
-            'company'       => $company,
-            'statuses_arr'  => Company::$STATUSES_ARR,
-            'types_arr'     => Company::$TYPES_ARR,
-        ]);
+        return view('companies.edit',
+            compact('company', 'statuses_arr', 'types_arr'));
     }
 
     /**
@@ -85,20 +84,12 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Company $company)
     {
-        $company = Company::findOrFail($id);
-
-        if ($company) {
-            $company->delete();
-
-            return redirect()
-                ->route('companies.index')
-                ->with('success', 'Company was deleted successfully.');
-        }
+        $company->delete();
 
         return redirect()
             ->route('companies.index')
-            ->with('error', 'Company not found.');
+            ->with('success', 'Company was deleted successfully.');
     }
 }

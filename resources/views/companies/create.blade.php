@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <x-form.label for="name" :value="__('Company')" />
-                    <x-form.input type="text" name="name" :value="old('name')" required autofocus />
+                    <x-form.input name="name" :value="old('name')" required autofocus />
                 </div>
 
                 <div class="col-md-2">
@@ -27,13 +27,13 @@
                         <button class="btn btn-outline-light" type="button" id="button-vat-check">
                             <x-icon name="arrow-right-circle" color="secondary"></x-icon>
                         </button>
-                        <x-form.input type="text" name="vat" :value="old('vat')" aria-describedby="button-vat-check" required />
+                        <x-form.input name="vat" :value="old('vat')" aria-describedby="button-vat-check" required />
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <x-form.label for="address" :value="__('Address')" />
-                    <x-form.input type="text" name="address" :value="old('address')" />
+                    <x-form.input name="address" :value="old('address')" />
                 </div>
 
                 <div class="col-md-4">
