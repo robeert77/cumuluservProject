@@ -12,9 +12,13 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = Company::paginate(10);
+        $companies = Company::filters($request->all())->paginate(10);
 
-        return view('companies.index', compact('companies'));
+        return view('companies.index', [
+            'companies'     => $companies,
+            'statuses_arr'  => Company::$STATUSES_ARR,
+            'types_arr'     => Company::$TYPES_ARR,
+        ]);
     }
 
     /**
@@ -22,7 +26,10 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('companies.create');
+        return view('companies.create', [
+            'statuses_arr'  => Company::$STATUSES_ARR,
+            'types_arr'     => Company::$TYPES_ARR,
+        ]);
     }
 
     /**
@@ -30,26 +37,9 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'      => 'required|string|max:255',
-            'vat'       => 'required|string|max:20',
-            'type'      => 'required|integer',
-            'address'   => 'required|string',
-            'phone'     => 'nullable|string|max:20',
-            'email'     => 'nullable|email|max:255',
-            'details'   => 'nullable|string|min:10',
-        ]);
+        $validated = $request->validate((new Company)->validationRules());
 
-        $company = Company::create([
-            'name'      => $request->input('name'),
-            'vat'       => $request->input('vat'),
-            'type'      => $request->input('type'),
-            'status'    => 1,
-            'address'   => $request->input('address'),
-            'phone'     => $request->input('phone'),
-            'email'     => $request->input('email'),
-            'details'   => $request->input('details'),
-        ]);
+        Company::create($validated);
 
         return redirect()
             ->route('companies.index')
@@ -71,25 +61,20 @@ class CompanyController extends Controller
     {
         $company = Company::findOrFail($id);
 
-        return view('companies.edit', compact('company'));
+        return view('companies.edit', [
+            'company'       => $company,
+            'statuses_arr'  => Company::$STATUSES_ARR,
+            'types_arr'     => Company::$TYPES_ARR,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Company $company)
     {
-        $validated = $request->validate([
-            'name'      => 'required|string|max:255',
-            'vat'       => 'required|string|max:20',
-            'type'      => 'required|integer',
-            'address'   => 'required|string',
-            'phone'     => 'nullable|string|max:20',
-            'email'     => 'nullable|email|max:255',
-            'details'   => 'nullable|string|min:10',
-        ]);
+        $validated = $request->validate($company->validationRules());
 
-        $company = Company::findOrFail($id);
         $company->update($validated);
 
         return redirect()

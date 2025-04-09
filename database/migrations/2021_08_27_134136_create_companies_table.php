@@ -20,7 +20,7 @@ class CreateCompaniesTable extends Migration
             $table->tinyInteger('type');
             $table->boolean('with_contract')->default(true);
             $table->tinyInteger('status');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->longText('details')->nullable();
