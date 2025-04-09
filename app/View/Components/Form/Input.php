@@ -8,7 +8,6 @@ use Illuminate\View\Component;
 
 class Input extends Component
 {
-    public $id;
     public $name;
     public $type;
     public $value;
@@ -21,7 +20,6 @@ class Input extends Component
      * Create a new component instance.
      */
     public function __construct(
-        $id,
         $name,
         $type = 'text',
         $value = null,
@@ -30,10 +28,9 @@ class Input extends Component
         $disabled = false,
         $checked = false
     ) {
-        $this->id = $id;
         $this->name = $name;
         $this->type = $type;
-        $this->value = $this->type !== 'checkbox' ? $value : 1;
+        $this->value = $value;
         $this->placeholder = $placeholder;
         $this->required = $required;
         $this->disabled = $disabled;

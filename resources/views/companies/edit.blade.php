@@ -9,12 +9,17 @@
             <div class="row">
                 <div class="col-md-4">
                     <x-form.label for="name" :value="__('Company')" />
-                    <x-form.input id="name" type="text" name="name" :value="old('name', $company->name)" required autofocus />
+                    <x-form.input type="text" name="name" :value="old('name', $company->name)" required autofocus />
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <x-form.label for="type" :value="__('Company Type')" />
-                    <x-form.input id="type" type="number" name="type" :value="old('type', $company->status)" required />
+                    <x-form.select name="type" :options="$types_arr" :selected="old('type', $company->type)" :placeholder="__('Choose')" required />
+                </div>
+
+                <div class="col-md-2">
+                    <x-form.label for="status" :value="__('Company Status')" />
+                    <x-form.select name="status" :options="$statuses_arr" :selected="old('status', $company->status)" :placeholder="__('Choose')" required/>
                 </div>
 
                 <div class="col-md-4">
@@ -23,46 +28,38 @@
                         <button class="btn btn-outline-light" type="button" id="button-vat-check">
                             <x-icon name="arrow-right-circle" color="secondary"></x-icon>
                         </button>
-                        <x-form.input id="vat" type="text" name="vat" :value="old('vat', $company->vat)" aria-describedby="button-vat-check" required />
+                        <x-form.input type="text" name="vat" :value="old('vat', $company->vat)" aria-describedby="button-vat-check" required />
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <x-form.label for="address" :value="__('Address')" />
-                    <x-form.input id="address" type="text" name="address" :value="old('address', $company->address)" required />
+                    <x-form.input type="text" name="address" :value="old('address', $company->address)" />
                 </div>
 
                 <div class="col-md-4">
-                    <x-form.label  for="phone" :value="__('Phone')" />
-                    <x-form.input id="phone" type="tel" name="phone" :value="old('phone', $company->phone)" />
+                    <x-form.label for="phone" :value="__('Phone')" />
+                    <x-form.input type="tel" name="phone" :value="old('phone', $company->phone)" />
                 </div>
 
                 <div class="col-md-4">
-                    <x-form.label  for="email" :value="__('Email')" />
-                    <x-form.input id="email" type="email" name="email" :value="old('email', $company->email)" />
+                    <x-form.label for="email" :value="__('Email')" />
+                    <x-form.input type="email" name="email" :value="old('email', $company->email)" />
                 </div>
 
                 <div class="col-md-4 mt-3">
                     <x-form.label for="with_contract" :value="__('Contract Collaboration')" />
                     <br>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input"
-                               type="radio"
-                               name="with_contract"
-                               id="with_contract_1"
-                               value="1"
-                            {{ old('with_contract', $company->with_contract) ? 'checked' : '' }}>
-                        <x-form.label class="form-check-label" for="status_active" :value="__('Yes')" />
+                        <x-form.label for="status_active" :value="__('Yes')" />
+                        <x-form.input type="radio" name="with_contract" value="1"
+                            :checked="old('with_contract', $company->with_contract ?? false) === true" />
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input"
-                               type="radio"
-                               name="with_contract"
-                               id="with_contract_0"
-                               value="0"
-                            {{ old('with_contract', $company->with_contract) ? 'checked' : '' }}>
-                        <x-form.label class="form-check-label" for="status_inactive" :value="__('No')" />
+                        <x-form.label for="status_inactive" :value="__('No')" />
+                        <x-form.input type="radio" name="with_contract" value="0"
+                            :checked="old('with_contract', $company->with_contract ?? false) === false" />
                     </div>
                 </div>
 
