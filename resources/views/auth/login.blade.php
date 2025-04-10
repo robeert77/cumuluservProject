@@ -20,14 +20,14 @@
                     <div class="mt-3">
                         <x-form.label for="email" :value="__('Email')"/>
 
-                        <x-form.input id="email" class="" type="email" name="email" :value="old('email')" required autofocus />
+                        <x-form.input type="email" name="email" :value="old('email')" required autofocus />
                     </div>
 
                     <!-- Password -->
                     <div class="mt-4">
-                        <x-form.label for="password" :value="__('Parola')" />
+                        <x-form.label for="password" :value="__('Password')" />
 
-                        <x-form.input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                        <x-form.input class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
                     </div>
 
                     <!-- Remember Me -->

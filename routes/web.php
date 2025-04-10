@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\InterventionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\InterventionController;
+use App\Http\Controllers\oldInterventionController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CompanyProductsController;
@@ -20,21 +21,23 @@ use App\Http\Controllers\PdfController;
 |
 */
 
-Route::middleware(['verified', 'auth'])->group(function () {
+Route::middleware(['auth'])->group(callback: function () {
     // Home page
     Route::get('/', [CompanyController::class, 'index'])
         ->name('home');
 
     Route::resource('companies', CompanyController::class);
 
+    Route::resource('companies.interventions', InterventionController::class);
+
     // Intervention for a comapany
-    Route::get('/company/{id}/intervention', [InterventionController::class, 'showForm'])
+    Route::get('/company/{id}/intervention', [oldInterventionController::class, 'showForm'])
         ->name('createIntervention');
-    Route::post('/company/{id}/intervention', [InterventionController::class, 'saveIntervention'])
+    Route::post('/company/{id}/intervention', [oldInterventionController::class, 'saveIntervention'])
         ->name('createIntervention');
-    Route::get('/intervention/{intervention_id}/edit', [InterventionController::class, 'editIntervention'])
+    Route::get('/intervention/{intervention_id}/edit', [oldInterventionController::class, 'editIntervention'])
         ->name('editIntervention');
-    Route::post('/intervention/{intervention_id}/edit', [InterventionController::class, 'updateIntervention'])
+    Route::post('/intervention/{intervention_id}/edit', [oldInterventionController::class, 'updateIntervention'])
         ->name('editIntervention');
 
     // Reports for a company

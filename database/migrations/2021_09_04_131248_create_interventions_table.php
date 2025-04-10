@@ -15,13 +15,17 @@ class CreateInterventionsTable extends Migration
     {
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
-            $table->integer('company_id');
-            $table->date('day')->nullable(false);
-            $table->time('start_at')->nullable(false);
-            $table->time('end_at')->nullable(false);
-            $table->text('observations');
-            $table->string('made_by');
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('title');
+            $table->longText('description')->nullable();
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time')->nullable();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

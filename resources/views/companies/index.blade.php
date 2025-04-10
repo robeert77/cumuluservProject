@@ -16,17 +16,17 @@
 
                     <div class="col-md-3">
                         <x-form.label for="type" :value="__('Company Type')"/>
-                        <x-form.select name="type" :options="$types_arr" :selected="request('type', $company->type ?? null)" :placeholder="__('Choose')" />
+                        <x-form.select name="type" :options="$types_arr" :selected="request('type')" :placeholder="__('Choose')" />
                     </div>
 
                     <div class="col-md-3">
                         <x-form.label for="status" :value="__('Status')"/>
-                        <x-form.select name="status" :options="$statuses_arr" :selected="request('status', $company->status ?? null)" :placeholder="__('Choose')" />
+                        <x-form.select name="status" :options="$statuses_arr" :selected="request('status')" :placeholder="__('Choose')" />
                     </div>
 
                     <div class="col-md-3">
                         <x-form.label for="with_contract" :value="__('Contract Collaboration')"/>
-                        <x-form.select name="with_contract" :options="[0 => __('No'), 1 => __('Yes')]" :selected="request('with_contract', $company->with_contract ?? null)" :placeholder="__('Choose')" />
+                        <x-form.select name="with_contract" :options="[0 => __('No'), 1 => __('Yes')]" :selected="request('with_contract')" :placeholder="__('Choose')" />
                     </div>
 
                     <div class="col-md-3">
@@ -77,15 +77,20 @@
                     <td>{{ $company->email }}</td>
                     <td>
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('companies.edit', $company->id) }}" class="btn">
-                                <x-icon name="pencil" color="primary"></x-icon>
+                            <a href="{{ route('companies.interventions.index', $company) }}" class="btn">
+                                <x-icon name="wrench" size="5" color="dark"></x-icon>
                             </a>
-                            <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
+
+                            <a href="{{ route('companies.edit', $company) }}" class="btn">
+                                <x-icon name="pencil" size="5" color="primary"></x-icon>
+                            </a>
+
+                            <form action="{{ route('companies.destroy', $company) }}" method="POST"
                                   onsubmit="return confirm('Are you sure you want to delete this company?');">
                                 @csrf
                                 @method('DELETE')
                                 <x-button type="submit">
-                                    <x-icon name="trash3" color="danger"></x-icon>
+                                    <x-icon name="trash3" size="5" color="danger"></x-icon>
                                 </x-button>
                             </form>
                         </div>
