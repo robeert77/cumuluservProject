@@ -2,7 +2,7 @@
 
 return [
     'actions' => 'Acțiuni',
-    'filter' => 'Filtru',
+    'filter' => 'Filtrează',
     'yes' => 'Da',
     'no' => 'Nu',
     'cancel' => 'Anulează',

@@ -2,9 +2,9 @@
 
 @section('content')
     @component('components.page.table-wrapper', [
-        'title'             => __('Companies'),
+        'title'             => __('companies.companies'),
         'addButtonRoute'    => route('companies.create'),
-        'addButtonText'     => __('Add Company'),
+        'addButtonText'     => __('companies.add_company'),
     ])
         @slot('filters')
             <form action="{{ route('companies.index')}}" method="GET">
