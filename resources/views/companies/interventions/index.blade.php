@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 @extends('layouts.app')
 
 @section('content')
@@ -36,7 +37,6 @@
             </form>
         @endslot
 
-
         @slot('tableHead')
             <th scope="col">#</th>
             <th scope="col">{{ __('Title') }}</th>
@@ -44,25 +44,36 @@
             <th scope="col">{{ __('Accomplished By') }}</th>
             <th scope="col">{{ __('Start Time') }}</th>
             <th scope="col">{{ __('End Time') }}</th>
+            <th scope="col">{{ __('Duration') }}</th>
             <th scope="col" class="text-end">{{ __('Actions') }}</th>
         @endslot
 
         @slot('tableBody')
             @foreach ($interventions as $intervention)
+                @php
+                    $start_time = Carbon::parse($intervention->start_time);
+                    $end_time = Carbon::parse($intervention->end_time);
+                    $diffInMinutes = $start_time->diffInMinutes($end_time);
+
+                    $hours = floor($diffInMinutes / 60);
+                    $minutes = $diffInMinutes % 60;
+                @endphp
                 <tr>
                     <th scope="row">{{ $intervention->id }}</th>
                     <td>{{ $intervention->title }}</td>
-                    <td>{{ $intervention->date }}</td>
+                    <td>{{ Carbon::parse($intervention->date)->format('d.m.Y') }}</td>
                     <td>{{ $users_arr[$intervention->user_id] ?? 'N/A' }}</td>
-                    <td>{{ $intervention->start_time }}</td>
-                    <td>{{ $intervention->end_time }}</td>
+                    <td>{{ $start_time->format('H:i') }}</td>
+                    <td>{{ $end_time->format('H:i') }}</td>
+                    <td>{{ $hours.'h '.$minutes.'m' }}</td>
                     <td>
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('companies.interventions.index', [$company, $intervention]) }}" class="btn">
+                            <a href="{{ route('companies.interventions.edit', [$company, $intervention]) }}" class="btn">
                                 <x-icon name="pencil" size="5" color="primary"></x-icon>
                             </a>
 
-                            <form action="{{ route('companies.interventions.destroy', [$company, $intervention]) }}" method="POST"
+                            <form action="{{ route('companies.interventions.destroy', [$company, $intervention]) }}"
+                                  method="POST"
                                   onsubmit="return confirm('Are you sure you want to delete this intervention?');">
                                 @csrf
                                 @method('DELETE')

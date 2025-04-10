@@ -58,17 +58,26 @@ class InterventionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Company $company, Intervention $intervention)
     {
-        //
+        $users_arr = User::pluck('name', 'id');
+
+        return view('companies.interventions.edit',
+            compact('company', 'intervention', 'users_arr'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Company $company, Intervention $intervention)
     {
-        //
+        $validated = $request->validate((new Intervention())->validationRules());
+
+        $intervention->update($validated);
+
+        return redirect()
+            ->route('companies.interventions.index', $company)
+            ->with('success', 'Intervention updated successfully!');
     }
 
     /**
