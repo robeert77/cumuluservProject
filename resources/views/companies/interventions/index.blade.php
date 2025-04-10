@@ -3,49 +3,49 @@
 
 @section('content')
     @component('components.page.table-wrapper', [
-        'title'             => __('Interventions for :company', ['company' => $company->name]),
+        'title'             => __('interventions.interventions_for_company', ['company' => $company->name]),
         'addButtonRoute'    => route('companies.interventions.create', $company),
-        'addButtonText'     => __('Add Intervention'),
+        'addButtonText'     => __('interventions.add_intervention'),
     ])
         @slot('filters')
             <form action="{{ route('companies.interventions.index', $company)}}" method="GET">
                 <div class="row row-gap-3 mt-3">
                     <div class="col-md-3">
-                        <x-form.label for="title" :value="__('Title')"/>
+                        <x-form.label for="title" :value="__('interventions.intervention_title')"/>
                         <x-form.input name="title" :value="request('title')" />
                     </div>
 
                     <div class="col-md-3">
-                        <x-form.label for="user_id" :value="__('Accomplished By')"/>
+                        <x-form.label for="user_id" :value="__('interventions.accomplished_by')"/>
                         <x-form.select name="user_id" :options="$users_arr" :selected="request('user_id')" :placeholder="__('Choose')" />
                     </div>
 
                     <div class="col-md-3">
-                        <x-form.label for="start_date" :value="__('Start Date')"/>
+                        <x-form.label for="start_date" :value="__('interventions.start_date')"/>
                         <x-form.input type="date" name="start_date" :value="request('start_date')"/>
                     </div>
 
                     <div class="col-md-3">
-                        <x-form.label for="end_date" :value="__('End Date')"/>
+                        <x-form.label for="end_date" :value="__('interventions.end_date')"/>
                         <x-form.input type="date" name="end_date" :value="request('end_date')"/>
                     </div>
                 </div>
 
                 <div class="d-flex items-center justify-content-end my-3">
-                    <x-button class="px-4" color="primary" outline>{{ __('Filter') }}</x-button>
+                    <x-button class="px-4" color="primary" outline>{{ __('messages.filter') }}</x-button>
                 </div>
             </form>
         @endslot
 
         @slot('tableHead')
             <th scope="col">#</th>
-            <th scope="col">{{ __('Title') }}</th>
-            <th scope="col">{{ __('Intervention Date') }}</th>
-            <th scope="col">{{ __('Accomplished By') }}</th>
-            <th scope="col">{{ __('Start Time') }}</th>
-            <th scope="col">{{ __('End Time') }}</th>
-            <th scope="col">{{ __('Duration') }}</th>
-            <th scope="col" class="text-end">{{ __('Actions') }}</th>
+            <th scope="col">{{ __('interventions.intervention_title') }}</th>
+            <th scope="col">{{ __('interventions.intervention_date') }}</th>
+            <th scope="col">{{ __('interventions.accomplished_by') }}</th>
+            <th scope="col">{{ __('interventions.start_time') }}</th>
+            <th scope="col">{{ __('interventions.end_time') }}</th>
+            <th scope="col">{{ __('interventions.duration') }}</th>
+            <th scope="col" class="text-end">{{ __('messages.actions') }}</th>
         @endslot
 
         @slot('tableBody')

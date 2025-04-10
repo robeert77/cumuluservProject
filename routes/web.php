@@ -3,12 +3,12 @@
 use App\Http\Controllers\InterventionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\oldInterventionController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CompanyProductsController;
 use App\Http\Controllers\SearchProductsController;
 use App\Http\Controllers\PdfController;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,13 @@ use App\Http\Controllers\PdfController;
 |
 */
 
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ro'])) {
+        Session::put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang');
+
 Route::middleware(['auth'])->group(callback: function () {
     // Home page
     Route::get('/', [CompanyController::class, 'index'])
@@ -29,16 +36,6 @@ Route::middleware(['auth'])->group(callback: function () {
     Route::resource('companies', CompanyController::class);
 
     Route::resource('companies.interventions', InterventionController::class);
-
-    // Intervention for a comapany
-    Route::get('/company/{id}/intervention', [oldInterventionController::class, 'showForm'])
-        ->name('createIntervention');
-    Route::post('/company/{id}/intervention', [oldInterventionController::class, 'saveIntervention'])
-        ->name('createIntervention');
-    Route::get('/intervention/{intervention_id}/edit', [oldInterventionController::class, 'editIntervention'])
-        ->name('editIntervention');
-    Route::post('/intervention/{intervention_id}/edit', [oldInterventionController::class, 'updateIntervention'])
-        ->name('editIntervention');
 
     // Reports for a company
     Route::get('/company/{id}/report/month/{date}', [ReportsController::class, 'monthlyReport'])
