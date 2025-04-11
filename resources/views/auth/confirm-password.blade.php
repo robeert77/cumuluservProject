@@ -5,7 +5,7 @@
         <div class="col-lg-4 card-shadow bg-white rounded">
             <div class="py-3 px-3">
                 <div class="mb-4">
-                    {{ __('Aceasta este o acțiune ireversibilă și are nevoie de confirmarea parolei dumneavoastră!') }}
+                    {{ __('auth.confirm_password_message') }}
                 </div>
 
                 <!-- Validation Errors -->
@@ -16,7 +16,7 @@
 
                     <!-- Password -->
                     <div>
-                        <x-form.label for="password" :value="__('Parolă')" />
+                        <x-form.label for="password" :value="__('auth.password')" />
 
                         <x-form.input id="password" class="mt-1"
                                         type="password"
@@ -27,7 +27,7 @@
 
                     <div class="mt-4">
                         <x-button class="btn-outline-primary rounded-pill w-100 mb-2">
-                            {{ __('Confirmă') }}
+                            {{ __('auth.confirm') }}
                         </x-button>
                     </div>
                 </form>

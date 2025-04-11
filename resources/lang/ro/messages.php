@@ -8,7 +8,7 @@ return [
     'cancel' => 'Anulează',
     'save' => 'Salvează',
     'back' => 'Înapoi',
-    'language' => 'Limba',
+    'language' => 'Limbă',
     'en' => 'Engleza',
     'ro' => 'Romana',
 ];

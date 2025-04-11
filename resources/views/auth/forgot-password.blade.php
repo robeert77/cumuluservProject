@@ -5,8 +5,7 @@
         <div class="col-lg-4 card-shadow bg-white rounded">
             <div class="py-3 px-3">
                 <div class="mb-4">
-                    {{ __('Ți-ai uitat parola? Nici o problema. Spune-ne adresa ta de email iar noi îți vom trimite un email cu un link prin care
-                    îți vei putea reseta parola.') }}
+                    {{ __('auth.forgot_password_message') }}
                 </div>
 
                 <!-- Session Status -->
@@ -21,14 +20,14 @@
 
                     <!-- Email Address -->
                     <div>
-                        <x-fomr.label for="email" :value="__('Email')" />
+                        <x-fomr.label for="email" :value="__('auth.email')" />
 
                         <x-form.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
                     </div>
 
                     <div class="mt-4">
                         <x-button class="btn-outline-primary rounded-pill w-100 mb-2">
-                            {{ __('Trimite Email') }}
+                            {{ __('auth.send_email') }}
                         </x-button>
                     </div>
                 </form>
