@@ -9,6 +9,6 @@ return [
     'save' => 'Salvează',
     'back' => 'Înapoi',
     'language' => 'Limbă',
-    'en' => 'Engleza',
-    'ro' => 'Romana',
+    'en' => 'Engleză',
+    'ro' => 'Romană',
 ];
