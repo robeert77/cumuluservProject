@@ -1,129 +1,123 @@
 let today = new Date();
 let selectedMonth, selectedYear, selectedDay;
 let months = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
-// am o variabila companyId, care vine din php. Daca aceasta este 0, atunci insemnca ca folosim calendarule pentru taskuri
 
 window.onload = function() {
-    let currentUrl = (new URL(window.location.href)).pathname;
-    let urlSize = currentUrl.length;
-    selectedYear = parseInt(currentUrl.substring(urlSize - 10, urlSize - 6));
-    selectedMonth = parseInt(currentUrl.substring(urlSize - 5, urlSize - 3)) - 1;
-    selectedDay = parseInt(currentUrl.substring(urlSize - 2));
+    // let currentUrl = (new URL(window.location.href)).pathname;
+    // let urlSize = currentUrl.length;
+    // selectedYear = parseInt(currentUrl.substring(urlSize - 10, urlSize - 6));
+    // selectedMonth = parseInt(currentUrl.substring(urlSize - 5, urlSize - 3)) - 1;
+    // selectedDay = parseInt(currentUrl.substring(urlSize - 2));
 
-    // generate months options
+    selectedYear = 2025;
+    selectedMonth = 3;
+    selectedDay = 11;
+
     for (let i = 0; i < 12; i++) {
-        let button = createOption(months[i], 'months-options');
+        let button = createOption(months[i], 'months-options', i === selectedMonth);
         button.setAttribute('href', reportRoute(selectedYear, i, selectedDay, 'month'));
     }
 
-    // generate years options
     for (let i = today.getFullYear(); i > 2020; i--) {
-        let button = createOption(i, 'years-options');
+        let button = createOption(i, 'years-options', i === selectedYear);
         button.setAttribute('href', reportRoute(i, selectedMonth, selectedDay, 'month'));
     }
 
-    // create the legend for our calendar
-    for (let i in legends) {
-        calendarLegend(legends[i].id);
-    }
+    let legendDay = document.getElementById('legend-day');
+    let contentLegend = document.createTextNode(selectedDay.toString().padStart(2, '0'));
+    legendDay.insertBefore(contentLegend, legendDay.firstChild)
 
     showCalendar(selectedMonth, selectedYear);
 };
 
-// add the current day to the calendar legend
-function calendarLegend(id) {
-    document.getElementById(id).prepend(document.createTextNode(today.getDate().toString().padStart(2, '0')));
-    document.getElementById(id).setAttribute('href', reportRoute(today.getFullYear(), today.getMonth(), today.getDate(), 'month'));
-}
+function createOption(content, parentId, isActive = null) {
+    let aElement = document.createElement('a');
+    aElement.innerHTML = content;
+    addCssClasses(aElement, isActive ? ['dropdown-item', 'active'] : ['dropdown-item']);
 
-// create the dropdown options coresponding to parentId
-function createOption(content, parentId) {
     let li = document.createElement('li');
-    let aTag = document.createElement('a');
-    aTag.appendChild(document.createTextNode(content));
-    aTag.classList.add('dropdown-item');
-    li.appendChild(aTag);
+    li.appendChild(aElement);
     document.getElementById(parentId).appendChild(li);
-    return aTag;
+
+    return aElement;
 }
 
-// generate the route for a specific intervention or for a specific monthly report
 function reportRoute(year, month, day, reportType) {
     // create a route for tasks
-    if (!companyId) {
+    if (!company['id']) {
         return '/tasks/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
     }
     // we create a route to reports only if we have an id for an company
-    return '/company/' + companyId + '/report/' + reportType + '/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
+    return '/company/' + company['id'] + '/report/' + reportType + '/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
 }
 
-// add coresponding css classes to the coresponding html tag
-function addCssClasses(classes, htmlTag) {
+function addCssClasses(htmlElement, classes) {
     for (let i = 0 ; i < classes.length; i++) {
-        htmlTag.classList.add(classes[i]);
+        htmlElement.classList.add(classes[i]);
     }
 }
 
-// create the element which will hold the date
-function createHtmlElement(row, content, cssClasses) {
-    let aTag = document.createElement('a');
-    let cellText = document.createTextNode(content.toString().padStart(2, '0'));
-    addCssClasses(cssClasses, aTag);
-    let div = document.createElement('div');
+function createCalendarDayElement(content, cssClasses, id) {
+    let aElement = document.createElement('a');
+    aElement.setAttribute('id', id);
+    aElement.setAttribute('href', reportRoute(selectedYear, selectedMonth, content, 'day'));
+    aElement.innerHTML = content.toString().padStart(2, '0');
+    addCssClasses(aElement, cssClasses);
 
-    if (cssClasses[0] != 'another-month') {
-        div.classList.add('d-flex', 'justify-content-evenly', 'px-2');
-        for (let i = 0; i < markedDays[content].length; i++) {
-            let span = document.createElement('span');
-            span.classList.add('w-100', markedDays[content][i]);
-            div.appendChild(span);
-        }
+    if (cssClasses[0] !== 'another-month' && interventionDays.length && interventionDays[0] === content) {
+        let divElement = document.createElement('div');
+        addCssClasses(divElement, ['d-flex', 'justified-content-evenly', 'align-items-end']);
+
+        let spanElement = document.createElement('span');
+        addCssClasses(spanElement, ['w-100', 'border-bottom', 'border-3', 'border-warning']);
+
+        divElement.appendChild(spanElement);
+        aElement.appendChild(divElement);
+
+        interventionDays.shift();
     }
 
-    aTag.setAttribute('href', reportRoute(selectedYear, selectedMonth, content, 'day'));
-    aTag.appendChild(cellText);
-    aTag.appendChild(div);
-    row.appendChild(aTag);
+    return aElement;
 }
 
-// return the number of days from the specified month
-function numberOfDays(month, year) {
+function getNumberOfDays(month, year) {
     return new Date(year, month + 1, 0).getDate();
 }
 
-// show the calendar for specified month and year
-function showCalendar(month, year) {
-    let firstDay = ((new Date(year, month)).getDay() + 7 - 1) % 7;
-    let totalDays = numberOfDays(month, year);
-    let fromAnotherMonth = numberOfDays(month - 1, year) - firstDay + 1;
-    let currentDay = 1;
+function getDayOfWeekIndex(year, month, day = 1) {
+    let date = new Date(year, month, day);
+    return ((date.getDay() + 6) % 7);
+}
 
+function showCalendar(month, year) {
     document.getElementById('calendar-month').textContent = months[month];
     document.getElementById('calendar-year').textContent = year;
     document.getElementById('calendar-content').innerHTML = "";
 
+    let firstDayOfMonthIndex = getDayOfWeekIndex(year, month);
+    let totalDaysInMonth = getNumberOfDays(month, year);
+    let dayFromAnotherMonth = getNumberOfDays(month - 1, year) - firstDayOfMonthIndex + 1;
+    let currentDay = 1;
+
     for (let i = 0; i < 6; i++) {
         let row = document.createElement('div');
+        addCssClasses(row, ['d-flex', 'justify-content-between']);
+
         for (let j = 0; j < 7; j++) {
-            if (i == 0 && j < firstDay || currentDay > totalDays) {
-                createHtmlElement(row, fromAnotherMonth, ['another-month', 'calendar-cell', 'text-decoration-none', 'text-secondary']);
-                fromAnotherMonth++;
+            let dayCell;
+            if ((i === 0 && j < firstDayOfMonthIndex) || currentDay > totalDaysInMonth) {
+                dayCell = createCalendarDayElement(dayFromAnotherMonth, ['another-month', 'calendar-cell', 'text-decoration-none', 'text-secondary'], `${dayFromAnotherMonth++}-${month}-${year}`);
             }
             else {
-                let cellClasses = ['calendar-cell', 'text-decoration-none', 'text-secondary'];
-                if (currentDay == today.getDate() && year == today.getFullYear() && month == today.getMonth()) {
-                    cellClasses.push('active');
-                }
-                else if (currentDay == selectedDay && month == selectedMonth && year == selectedYear) {
-                    cellClasses.push('selected-day');
-                }
-
-                createHtmlElement(row, currentDay, cellClasses);
-                fromAnotherMonth = 1;
-                currentDay++;
+                dayCell = createCalendarDayElement(currentDay, ['calendar-cell', 'text-decoration-none', 'text-secondary'], `${currentDay++}-${month}-${year}`);
+                dayFromAnotherMonth = 1;
             }
+
+            row.appendChild(dayCell);
         }
-        addCssClasses(['d-flex', 'fustify-content-between'], row);
         document.getElementById('calendar-content').appendChild(row);
     }
+
+    addCssClasses(document.getElementById(`${today.getDate()}-${today.getMonth()}-${today.getFullYear()}`), ['active']);
+    addCssClasses(document.getElementById(`${selectedDay}-${selectedMonth}-${selectedYear}`), ['selected-day']);
 }
