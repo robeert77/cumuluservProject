@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <x-form.label for="status" :value="__('companies.status')"/>
+                        <x-form.label for="status" :value="__('companies.company_status')"/>
                         <x-form.select name="status" :options="$statuses_arr" :selected="request('status')" :placeholder="__('Choose')" />
                     </div>
 
@@ -57,7 +57,7 @@
             <th scope="col">{{ __('companies.company_name') }}</th>
             <th scope="col">{{ __('companies.company_type') }}</th>
             <th scope="col">{{ __('companies.vat') }}</th>
-            <th scope="col">{{ __('companies.status') }}</th>
+            <th scope="col">{{ __('companies.company_status') }}</th>
             <th scope="col">{{ __('companies.contract_collaboration') }}</th>
             <th scope="col">{{ __('companies.phone') }}</th>
             <th scope="col">{{ __('companies.email') }}</th>
@@ -66,9 +66,13 @@
 
         @slot('tableBody')
             @foreach ($companies as $company)
-                <tr>
+                <tr class="align-middle">
                     <th scope="row">{{ $company->id }}</th>
-                    <td>{{ $company->name }}</td>
+                    <td>
+                        <a href="{{ route('companies.show', ['company' => $company, 'date' => now()->toDateString()]) }}" class="fw-bold text-decoration-none link-primary link-opacity-50-hover">
+                            {{ $company->name }}
+                        </a>
+                    </td>
                     <td>{{ $types_arr[$company->type] ?? 'N/A' }}</td>
                     <td>{{ $company->vat }}</td>
                     <td>{{ $statuses_arr[$company->status] ?? 'N/A' }}</td>

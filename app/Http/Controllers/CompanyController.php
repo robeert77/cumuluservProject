@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Intervention;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Company;
 
@@ -50,9 +52,29 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, Company $company)
     {
-        //
+        $date = Carbon::parse($request->get('date'));
+
+        $interventionDays = Intervention::whereMonth('date', $date->month)
+            ->whereYear('date', $date->year)
+            ->where('company_id', $company->id)
+            ->orderBy('date', 'asc')
+            ->pluck('date')
+            ->map(fn($date) => Carbon::parse($date)->day)
+            ->unique()
+            ->values();
+
+        $statuses_arr = Company::$STATUSES_ARR;
+        $types_arr = Company::$TYPES_ARR;
+
+        return view('companies.show', [
+            'company'           => $company,
+            'statuses_arr'      => $statuses_arr,
+            'types_arr'         => $types_arr,
+            'interventionDays'  => $interventionDays,
+            'date'              => $date->toDateString(),
+        ]);
     }
 
     /**
