@@ -71,11 +71,11 @@ kbd {
 }
 
 .calendar-cell {
-    height: 32px;
-    line-height: 33px;
+    height: 29px;
+    line-height: 29px;
     margin: 5px;
     text-align: center;
-    width: 32px;
+    width: 29px;
 }
 
 #calendar-content a.active,
