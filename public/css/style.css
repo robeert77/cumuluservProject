@@ -64,7 +64,6 @@ kbd {
 
 .calendar {
     box-shadow: 0 0 8px #d2d2d2;
-    /*max-width: 300px;*/
 }
 
 .calendar ul {
@@ -72,17 +71,16 @@ kbd {
 }
 
 .calendar-cell {
-    height: 28px;
-    line-height: 29px;
+    height: 32px;
+    line-height: 33px;
     margin: 5px;
     text-align: center;
-    width: 28px;
+    width: 32px;
 }
 
 #calendar-content a.active,
-.calendar-cell:not(li):hover {
-    background: rgba(0, 105, 138, 0.25);
-    border-radius: 50%;
+.calendar-cell:not(li,#legend-day):hover {
+    background: rgba(var(--bs-info-rgb), 0.25);
 }
 
 .calendar-cell:not(li):hover {
@@ -93,11 +91,6 @@ kbd {
     cursor: default;
     opacity: 0.4;
     pointer-events: none;
-}
-
-.selected-day {
-    background: rgba(0, 105, 138, 0.1);
-    border-radius: 50%;
 }
 
 .raport-index {

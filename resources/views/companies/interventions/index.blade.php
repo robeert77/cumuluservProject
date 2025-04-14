@@ -58,7 +58,7 @@
                     $hours = floor($diffInMinutes / 60);
                     $minutes = $diffInMinutes % 60;
                 @endphp
-                <tr>
+                <tr class="align-middle">
                     <th scope="row">{{ $intervention->id }}</th>
                     <td>{{ $intervention->title }}</td>
                     <td>{{ Carbon::parse($intervention->date)->format('d.m.Y') }}</td>

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row d-flex justify-content-between my-5">
-        <div class="col-lg-3 pe-lg-0">
-            <x-calendar :interventionDays="$interventionDays" :company="$company" />
+    <div class="row justify-content-between my-5">
+        <div class="col-lg-4 pe-lg-0">
+            <x-calendar :interventionDays="$interventionDays" :company="$company" :date="$date" />
         </div>
         <div class="col-lg-8 card bg-white rounded">
             <div class="title-header pt-4 d-flex">
@@ -15,7 +15,7 @@
 
             <hr class="my-3">
 
-            <div class="fs-5">
+            <div class="px-2 fs-5">
                 <strong>{{ __('companies.company_name') }}:</strong> {{ $company->name }} <br>
                 <strong>{{ __('companies.company_type') }}:</strong> {{ $types_arr[$company->type] ?? 'N/A' }} <br>
                 <strong>{{ __('companies.company_status') }}:</strong> {{ $statuses_arr[$company->status] ?? 'N/A' }} <br>

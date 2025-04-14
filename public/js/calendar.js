@@ -1,26 +1,17 @@
 let today = new Date();
-let selectedMonth, selectedYear, selectedDay;
-let months = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+let selectedDay = selectedDate.getDate() ;
+let selectedMonth = selectedDate.getMonth();
+let selectedYear = selectedDate.getFullYear();
 
 window.onload = function() {
-    // let currentUrl = (new URL(window.location.href)).pathname;
-    // let urlSize = currentUrl.length;
-    // selectedYear = parseInt(currentUrl.substring(urlSize - 10, urlSize - 6));
-    // selectedMonth = parseInt(currentUrl.substring(urlSize - 5, urlSize - 3)) - 1;
-    // selectedDay = parseInt(currentUrl.substring(urlSize - 2));
-
-    selectedYear = 2025;
-    selectedMonth = 3;
-    selectedDay = 11;
-
     for (let i = 0; i < 12; i++) {
         let button = createOption(months[i], 'months-options', i === selectedMonth);
-        button.setAttribute('href', reportRoute(selectedYear, i, selectedDay, 'month'));
+        button.setAttribute('href', reportRoute(selectedYear, i, selectedDay));
     }
 
     for (let i = today.getFullYear(); i > 2020; i--) {
         let button = createOption(i, 'years-options', i === selectedYear);
-        button.setAttribute('href', reportRoute(i, selectedMonth, selectedDay, 'month'));
+        button.setAttribute('href', reportRoute(i, selectedMonth, selectedDay));
     }
 
     let legendDay = document.getElementById('legend-day');
@@ -28,6 +19,13 @@ window.onload = function() {
     legendDay.insertBefore(contentLegend, legendDay.firstChild)
 
     showCalendar(selectedMonth, selectedYear);
+
+    addCssClasses(document.getElementById(`${selectedYear}-${selectedMonth}-${selectedDay}`), ['bg-info', 'rounded-circle', 'bg-opacity-25']);
+
+    let todayElement = document.getElementById(`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`);
+    if (todayElement) {
+        addCssClasses(todayElement, ['bg-info', 'rounded-circle', 'bg-opacity-75']);
+    }
 };
 
 function createOption(content, parentId, isActive = null) {
@@ -42,13 +40,8 @@ function createOption(content, parentId, isActive = null) {
     return aElement;
 }
 
-function reportRoute(year, month, day, reportType) {
-    // create a route for tasks
-    if (!company['id']) {
-        return '/tasks/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
-    }
-    // we create a route to reports only if we have an id for an company
-    return '/company/' + company['id'] + '/report/' + reportType + '/' + year.toString().padStart(2, '0') + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
+function reportRoute(year, month, day) {
+    return anotherDateURL + `?date=${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 }
 
 function addCssClasses(htmlElement, classes) {
@@ -60,11 +53,11 @@ function addCssClasses(htmlElement, classes) {
 function createCalendarDayElement(content, cssClasses, id) {
     let aElement = document.createElement('a');
     aElement.setAttribute('id', id);
-    aElement.setAttribute('href', reportRoute(selectedYear, selectedMonth, content, 'day'));
+    aElement.setAttribute('href', reportRoute(selectedYear, selectedMonth, content));
     aElement.innerHTML = content.toString().padStart(2, '0');
     addCssClasses(aElement, cssClasses);
 
-    if (cssClasses[0] !== 'another-month' && interventionDays.length && interventionDays[0] === content) {
+    if (!cssClasses.includes('another-month') && interventionDays.length && interventionDays[0] === content) {
         let divElement = document.createElement('div');
         addCssClasses(divElement, ['d-flex', 'justified-content-evenly', 'align-items-end']);
 
@@ -99,17 +92,17 @@ function showCalendar(month, year) {
     let dayFromAnotherMonth = getNumberOfDays(month - 1, year) - firstDayOfMonthIndex + 1;
     let currentDay = 1;
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; currentDay <= totalDaysInMonth; i++) {
         let row = document.createElement('div');
         addCssClasses(row, ['d-flex', 'justify-content-between']);
 
         for (let j = 0; j < 7; j++) {
             let dayCell;
             if ((i === 0 && j < firstDayOfMonthIndex) || currentDay > totalDaysInMonth) {
-                dayCell = createCalendarDayElement(dayFromAnotherMonth, ['another-month', 'calendar-cell', 'text-decoration-none', 'text-secondary'], `${dayFromAnotherMonth++}-${month}-${year}`);
+                dayCell = createCalendarDayElement(dayFromAnotherMonth, ['another-month', 'calendar-cell', 'text-decoration-none', 'text-secondary'], `${year}-${month}-${dayFromAnotherMonth++}`);
             }
             else {
-                dayCell = createCalendarDayElement(currentDay, ['calendar-cell', 'text-decoration-none', 'text-secondary'], `${currentDay++}-${month}-${year}`);
+                dayCell = createCalendarDayElement(currentDay, ['calendar-cell', 'text-decoration-none', 'text-secondary', 'rounded-circle'], `${year}-${month}-${currentDay++}`);
                 dayFromAnotherMonth = 1;
             }
 
@@ -117,7 +110,4 @@ function showCalendar(month, year) {
         }
         document.getElementById('calendar-content').appendChild(row);
     }
-
-    addCssClasses(document.getElementById(`${today.getDate()}-${today.getMonth()}-${today.getFullYear()}`), ['active']);
-    addCssClasses(document.getElementById(`${selectedDay}-${selectedMonth}-${selectedYear}`), ['selected-day']);
 }
