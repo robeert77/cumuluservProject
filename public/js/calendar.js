@@ -24,7 +24,7 @@ window.onload = function() {
 
     let todayElement = document.getElementById(`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`);
     if (todayElement) {
-        addCssClasses(todayElement, ['bg-info', 'rounded-circle', 'bg-opacity-75']);
+        addCssClasses(todayElement, ['bg-info', 'rounded-circle', 'bg-opacity-50']);
     }
 };
 
