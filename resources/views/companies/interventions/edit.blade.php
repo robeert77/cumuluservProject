@@ -15,7 +15,7 @@
 
                 <div class="col-md-6">
                     <x-form.label for="user_id" :value="__('interventions.accomplished_by')"/>
-                    <x-form.select name="user_id" :options="$users_arr"
+                    <x-form.select name="user_id" :options="$usersArr"
                                    :selected="old('user_id', $intervention->user_id)" :placeholder="__('Choose')"/>
                 </div>
 

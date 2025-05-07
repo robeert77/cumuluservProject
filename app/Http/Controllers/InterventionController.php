@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Intervention;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InterventionController extends Controller
@@ -14,7 +15,9 @@ class InterventionController extends Controller
      */
     public function index(Request $request, Company $company)
     {
-        $interventions = $company->interventions()->filters($request->all())->paginate(10);
+        $interventions = $company->interventions()
+            ->filters($request->all())
+            ->paginate(10);
 
         $users_arr = User::pluck('name', 'id');
 
@@ -47,12 +50,35 @@ class InterventionController extends Controller
             ->with('success', 'Intervention created successfully!');
     }
 
+    public function byDate(Request $request, Company $company)
+    {
+        $date = Carbon::parse($request->get('date'));
+
+        $interventionDays = Intervention::getInterventionDaysByMonthAndYear($date, $company);
+
+        $interventions = $company->interventions()
+            ->whereDate('date', $date)
+            ->paginate(10);
+
+        $usersArr = User::pluck('name', 'id');
+
+        return view('companies.interventions.show_by_date',
+            compact('company', 'interventions', 'interventionDays', 'date', 'usersArr'));
+    }
+
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Company $company, Intervention $intervention)
     {
-        //
+        $date = Carbon::parse($intervention->date);
+
+        $interventionDays = Intervention::getInterventionDaysByMonthAndYear($date, $company);
+
+        $usersArr = User::pluck('name', 'id');
+
+        return view('companies.interventions.show',
+            compact('intervention', 'interventionDays', 'date', 'usersArr'));
     }
 
     /**
@@ -60,10 +86,10 @@ class InterventionController extends Controller
      */
     public function edit(Company $company, Intervention $intervention)
     {
-        $users_arr = User::pluck('name', 'id');
+        $usersArr = User::pluck('name', 'id');
 
         return view('companies.interventions.edit',
-            compact('company', 'intervention', 'users_arr'));
+            compact('company', 'intervention', 'usersArr'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +34,18 @@ class Intervention extends Model
         }
 
         return $query;
+    }
+
+    public static function getInterventionDaysByMonthAndYear(Carbon $date, Company $company)
+    {
+        return self::whereMonth('date', $date->month)
+            ->whereYear('date', $date->year)
+            ->where('company_id', $company->id)
+            ->orderBy('date', 'asc')
+            ->pluck('date')
+            ->map(fn($date) => Carbon::parse($date)->day)
+            ->unique()
+            ->values();
     }
 
     public function validationRules(): array

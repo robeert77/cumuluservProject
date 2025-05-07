@@ -12,12 +12,13 @@
                 <div class="row row-gap-3 mt-3">
                     <div class="col-md-3">
                         <x-form.label for="title" :value="__('interventions.intervention_title')"/>
-                        <x-form.input name="title" :value="request('title')" />
+                        <x-form.input name="title" :value="request('title')"/>
                     </div>
 
                     <div class="col-md-3">
                         <x-form.label for="user_id" :value="__('interventions.accomplished_by')"/>
-                        <x-form.select name="user_id" :options="$users_arr" :selected="request('user_id')" :placeholder="__('Choose')" />
+                        <x-form.select name="user_id" :options="$users_arr" :selected="request('user_id')"
+                                       :placeholder="__('Choose')"/>
                     </div>
 
                     <div class="col-md-3">
@@ -51,9 +52,9 @@
         @slot('tableBody')
             @foreach ($interventions as $intervention)
                 @php
-                    $start_time = Carbon::parse($intervention->start_time);
-                    $end_time = Carbon::parse($intervention->end_time);
-                    $diffInMinutes = $start_time->diffInMinutes($end_time);
+                    $startTime = Carbon::parse($intervention->start_time);
+                    $endTime = Carbon::parse($intervention->end_time);
+                    $diffInMinutes = $startTime->diffInMinutes($endTime);
 
                     $hours = floor($diffInMinutes / 60);
                     $minutes = $diffInMinutes % 60;
@@ -63,12 +64,13 @@
                     <td>{{ $intervention->title }}</td>
                     <td>{{ Carbon::parse($intervention->date)->format('d.m.Y') }}</td>
                     <td>{{ $users_arr[$intervention->user_id] ?? 'N/A' }}</td>
-                    <td>{{ $start_time->format('H:i') }}</td>
-                    <td>{{ $end_time->format('H:i') }}</td>
+                    <td>{{ $startTime->format('H:i') }}</td>
+                    <td>{{ $endTime->format('H:i') }}</td>
                     <td>{{ $hours.'h '.$minutes.'m' }}</td>
                     <td>
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('companies.interventions.edit', [$company, $intervention]) }}" class="btn">
+                            <a href="{{ route('companies.interventions.edit', [$company, $intervention]) }}" class="btn"
+                               data-bs-toggle="tooltip" title="{{ __('messages.edit') }}">
                                 <x-icon name="pencil" size="5" color="primary"></x-icon>
                             </a>
 
@@ -77,7 +79,7 @@
                                   onsubmit="return confirm('Are you sure you want to delete this intervention?');">
                                 @csrf
                                 @method('DELETE')
-                                <x-button type="submit">
+                                <x-button type="submit" data-bs-toggle="tooltip" title="{{ __('messages.delete') }}">
                                     <x-icon name="trash3" size="5" color="danger"></x-icon>
                                 </x-button>
                             </form>
