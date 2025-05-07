@@ -2,6 +2,7 @@
 
 return [
     'interventions_for_company' => 'Intervenții pentru :company',
+    'intervention_for_company' => 'Intervenție pentru :company',
     'interventions' => 'Intervenții',
     'intervention' => 'Intervenție',
     'add_intervention' => 'Adaugă intervenție',

@@ -6,12 +6,12 @@ let selectedYear = selectedDate.getFullYear();
 window.onload = function() {
     for (let i = 0; i < 12; i++) {
         let button = createOption(months[i], 'months-options', i === selectedMonth);
-        button.setAttribute('href', reportRoute(selectedYear, i, selectedDay));
+        button.setAttribute('href', interventionRoute(selectedYear, i, selectedDay));
     }
 
     for (let i = today.getFullYear(); i > 2020; i--) {
         let button = createOption(i, 'years-options', i === selectedYear);
-        button.setAttribute('href', reportRoute(i, selectedMonth, selectedDay));
+        button.setAttribute('href', interventionRoute(i, selectedMonth, selectedDay));
     }
 
     let legendDay = document.getElementById('legend-day');
@@ -40,7 +40,7 @@ function createOption(content, parentId, isActive = null) {
     return aElement;
 }
 
-function reportRoute(year, month, day) {
+function interventionRoute(year, month, day) {
     return anotherDateURL + `?date=${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 }
 
@@ -53,7 +53,7 @@ function addCssClasses(htmlElement, classes) {
 function createCalendarDayElement(content, cssClasses, id) {
     let aElement = document.createElement('a');
     aElement.setAttribute('id', id);
-    aElement.setAttribute('href', reportRoute(selectedYear, selectedMonth, content));
+    aElement.setAttribute('href', interventionRoute(selectedYear, selectedMonth, content));
     aElement.innerHTML = content.toString().padStart(2, '0');
     addCssClasses(aElement, cssClasses);
 

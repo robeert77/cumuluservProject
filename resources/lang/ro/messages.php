@@ -11,4 +11,7 @@ return [
     'language' => 'Limbă',
     'en' => 'Engleză',
     'ro' => 'Romană',
+    'for' => 'Pentru',
+    'edit' => 'Editează',
+    'delete' => 'Șterge',
 ];

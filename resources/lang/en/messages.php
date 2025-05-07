@@ -11,4 +11,7 @@ return [
     'language' => 'Language',
     'en' => 'English',
     'ro' => 'Romanian',
+    'for' => 'For',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
 ];

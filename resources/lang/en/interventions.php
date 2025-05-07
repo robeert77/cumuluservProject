@@ -2,6 +2,7 @@
 
 return [
     'interventions_for_company' => 'Interventions for :company',
+    'intervention_for_company' => 'Intervention for :company',
     'interventions' => 'Interventions',
     'intervention' => 'Intervention',
     'add_intervention' => 'Add Intervention',

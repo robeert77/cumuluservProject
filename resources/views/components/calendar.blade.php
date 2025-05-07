@@ -48,7 +48,7 @@
 </div>
 <script>
     let months = @json(__('calendar.months'));
-    let anotherDateURL = '{{ route('companies.show', $company) }}';
+    let anotherDateURL = '{{ route('companies.interventions.byDate', $company) }}';
     let selectedDate = new Date('{{ $date }}');
     let interventionDays = @json($interventionDays ?? []);
     let company = @json($company->toArray() ?? []);
