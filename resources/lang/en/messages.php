@@ -14,4 +14,8 @@ return [
     'for' => 'For',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'success' => 'Success',
+    'error' => 'Error',
+    'warning' => 'Warning',
+    'info' => 'Info',
 ];
