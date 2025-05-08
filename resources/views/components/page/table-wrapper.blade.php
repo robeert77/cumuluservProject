@@ -1,4 +1,19 @@
-<div class="card-shadow card bg-white rounded my-5 py-4">
+<div class="d-flex justify-content-end my-4">
+    @foreach (['success', 'error', 'warning', 'info'] as $msg)
+        @if(session($msg))
+            <div class="alert alert-{{ $msg }} col-md-4 alert-dismissible fade show m-0" role="alert">
+                <h4 class="alert-heading">{{ ucfirst(__('messages.'.$msg)) }}</h4>
+                <hr class="my-2">
+                <p class="fs-5 m-0">
+                    {{ session($msg) }}
+                </p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+       @endif
+    @endforeach
+</div>
+
+<div class="card-shadow card bg-white rounded py-4">
     <div class="card-header border-0">
         <div class="d-flex justify-content-between title-header">
             <h3 class="font-weight-normal">{{ __($title) }}</h3>

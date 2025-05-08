@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Intervention;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Company;
 
@@ -14,11 +16,11 @@ class CompanyController extends Controller
     {
         $companies = Company::filters($request->all())->paginate(10);
 
-        return view('companies.index', [
-            'companies'     => $companies,
-            'statuses_arr'  => Company::$STATUSES_ARR,
-            'types_arr'     => Company::$TYPES_ARR,
-        ]);
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
+
+        return view('companies.index',
+            compact('companies', 'statusesArr', 'typesArr'));
     }
 
     /**
@@ -26,10 +28,11 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('companies.create', [
-            'statuses_arr'  => Company::$STATUSES_ARR,
-            'types_arr'     => Company::$TYPES_ARR,
-        ]);
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
+
+        return view('companies.create',
+            compact('statusesArr', 'typesArr'));
     }
 
     /**
@@ -43,29 +46,40 @@ class CompanyController extends Controller
 
         return redirect()
             ->route('companies.index')
-            ->with('success', 'Company created successfully!');
+            ->with('success', __('companies.success_created'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, Company $company)
     {
-        //
+        $date = Carbon::parse($request->get('date'));
+
+        $interventionDays = Intervention::getInterventionDaysByMonthAndYear($date, $company);
+
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
+
+        return view('companies.show', [
+            'company'           => $company,
+            'statuses_arr'      => $statusesArr,
+            'types_arr'         => $typesArr,
+            'interventionDays'  => $interventionDays,
+            'date'              => $date->toDateString(),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Company $company)
     {
-        $company = Company::findOrFail($id);
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
 
-        return view('companies.edit', [
-            'company'       => $company,
-            'statuses_arr'  => Company::$STATUSES_ARR,
-            'types_arr'     => Company::$TYPES_ARR,
-        ]);
+        return view('companies.edit',
+            compact('company', 'statusesArr', 'typesArr'));
     }
 
     /**
@@ -79,26 +93,18 @@ class CompanyController extends Controller
 
         return redirect()
             ->route('companies.index')
-            ->with('success', 'Company updated successfully.');
+            ->with('success', __('companies.success_updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Company $company)
     {
-        $company = Company::findOrFail($id);
-
-        if ($company) {
-            $company->delete();
-
-            return redirect()
-                ->route('companies.index')
-                ->with('success', 'Company was deleted successfully.');
-        }
+        $company->delete();
 
         return redirect()
             ->route('companies.index')
-            ->with('error', 'Company not found.');
+            ->with('success', __('companies.success_deleted'));
     }
 }

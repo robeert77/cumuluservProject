@@ -5,13 +5,12 @@
         <div class="col-lg-4 card-shadow bg-white rounded">
             <div class="py-3 px-3">
                 <div class="mb-4">
-                    {{ __('Mulțumim pentru înregistrare! Înainte să începem, te rugăm verifică-ți adresa de email accesând link-ul pe care
-                    ți l-am trimis. Dacă nu ai primit nici un email, îți vom retrimite emailul.') }}
+                    {{ __('auth.thank_you_for_registering') }}
                 </div>
 
                 @if (session('status') == 'verification-link-sent')
                     <div class="mb-4 fs-6 text-info">
-                        {{ __('Un link nou de verificare a fost trimis la adresa de email precizată la înregistrare.') }}
+                        {{ __('auth.verification_link_send') }}
                     </div>
                 @endif
 
@@ -21,7 +20,7 @@
 
                         <div>
                             <x-button class="btn-outline-primary rounded-pill w-100 mb-2 py-2">
-                                {{ __('Retrimite Email') }}
+                                {{ __('auth.resend_email') }}
                             </x-button>
                         </div>
                     </form>
@@ -31,7 +30,7 @@
 
                         <div class="">
                             <button type="submit" class="btn-outline-primary rounded-pill w-100 py-2">
-                                {{ __('Log Out') }}
+                                {{ __('auth.log_out') }}
                             </button>
                         </div>
                     </form>

@@ -7514,6 +7514,10 @@ textarea.form-control-lg {
   border-color: rgba(var(--bs-white-rgb), var(--bs-border-opacity)) !important;
 }
 
+.border-transparent {
+    border-color: transparent !important;
+}
+
 .border-primary-subtle {
   border-color: var(--bs-primary-border-subtle) !important;
 }

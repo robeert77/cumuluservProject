@@ -3,7 +3,7 @@
 @if ($errors->any())
     <div {{ $attributes }}>
         <div class="fs-5 text-danger">
-            {{ __('Whoops! Something went wrong.') }}
+            {{ __('validation.something_went_wrong') }}
         </div>
 
         <ul class="mt-3 fs-6 text-danger">
