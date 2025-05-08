@@ -18,4 +18,5 @@ return [
     'error' => 'Eroare',
     'warning' => 'Atenționare',
     'info' => 'Informare',
+    'created' => 'Creat',
 ];

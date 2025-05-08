@@ -54,7 +54,7 @@ class CompanyController extends Controller
      */
     public function show(Request $request, Company $company)
     {
-        $date = Carbon::parse($request->get('date'));
+        $date = Carbon::parse($request->get('date') ?? now());
 
         $interventionDays = Intervention::getInterventionDaysByMonthAndYear($date, $company);
 

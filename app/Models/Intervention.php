@@ -51,7 +51,7 @@ class Intervention extends Model
     public function validationRules(): array
     {
         return [
-            'company_id'    => 'nullable|exists:companies,id',
+            'company_id'    => 'required|exists:companies,id',
             'user_id'       => 'nullable|exists:users,id',
             'title'         => 'required|string|max:255',
             'description'   => 'nullable|string',

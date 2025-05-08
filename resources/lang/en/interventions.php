@@ -18,7 +18,9 @@ return [
     'start_time' => 'Start Time',
     'end_time' => 'End Time',
     'duration' => 'Duration',
+    'duration_parameter' => ':hours h and :minutes m',
     'success_created' => 'Intervention created successfully!',
     'success_updated' => 'Intervention updated successfully!',
     'success_deleted' => 'Intervention deleted successfully!',
+    'nr_interventions' => 'Number of Interventions',
 ];

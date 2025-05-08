@@ -72,7 +72,7 @@
                 <tr class="align-middle">
                     <th scope="row">{{ $company->id }}</th>
                     <td>
-                        <a href="{{ route('companies.show', ['company' => $company, 'date' => now()->toDateString()]) }}"
+                        <a href="{{ route('companies.show', $company) }}"
                            class="fw-bold text-decoration-none link-primary link-opacity-50-hover">
                             {{ $company->name }}
                         </a>

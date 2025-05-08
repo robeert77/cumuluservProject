@@ -18,4 +18,5 @@ return [
     'error' => 'Error',
     'warning' => 'Warning',
     'info' => 'Info',
+    'created' => 'Created',
 ];
