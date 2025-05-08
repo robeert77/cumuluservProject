@@ -14,4 +14,8 @@ return [
     'for' => 'Pentru',
     'edit' => 'Editează',
     'delete' => 'Șterge',
+    'success' => 'Succes',
+    'error' => 'Eroare',
+    'warning' => 'Atenționare',
+    'info' => 'Informare',
 ];

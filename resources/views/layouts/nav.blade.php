@@ -18,20 +18,34 @@
                     <li class="nav-item fs-5 pe-0 pe-md-3">
                         <a class="nav-link text-light" href="#">{{ __('Reports')  }}</a>
                     </li>
-                    <li class="nav-item fs-5 pe-0 pe-md-3">
-                        <a class="nav-link text-light" href="#" role="button">
+                    <li class="nav-item dropdown fs-5 pe-0 pe-md-3">
+                        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="pe-2">
                                 <x-icon name="person-circle" color="light"></x-icon>
                             </span>
                             {{ Auth::user()->name }}
                         </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                                         onclick="event.preventDefault();
+                                          this.closest('form').submit();" >
+                                        {{ __('Log Out') }}
+                                    </a>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                 @else
-                    <li class="nav-item">
-                        <a class="nav-link fs-5" aria-current="page" href="{{ route('login') }}">{{ __('auth.log_in') }}</a>
+                    <li class="nav-item fs-5 pe-0 pe-md-3">
+                        <a class="nav-link text-light" aria-current="page" href="{{ route('login') }}">{{ __('auth.log_in') }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link fs-5" aria-current="page" href="{{ route('register') }}">{{ __('auth.register') }}</a>
+                    <li class="nav-item fs-5 pe-0 pe-md-3">
+                        <a class="nav-link text-light" aria-current="page" href="{{ route('register') }}">{{ __('auth.register') }}</a>
                     </li>
                 @endauth
                 <li class="nav-item dropdown">

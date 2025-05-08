@@ -14,4 +14,18 @@ return [
     'email' => 'Email',
     'address' => 'Address',
     'details' => 'Details',
+    'success_created' => 'Company created successfully!',
+    'success_updated' => 'Company updated successfully!',
+    'success_deleted' => 'Company deleted successfully!',
+    'types' => [
+        'company'    => 'Company',
+        'individual' => 'Individual',
+        'non_profit' => 'Non Profit Organization',
+    ],
+    'statuses' => [
+        'active'                => 'Active',
+        'future_collaborating'  => 'Future Collaborating',
+        'collaborating'         => 'Collaborating',
+        'stop_collaborating'    => 'Stop Collaborating',
+    ],
 ];

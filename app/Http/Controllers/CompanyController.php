@@ -16,8 +16,8 @@ class CompanyController extends Controller
     {
         $companies = Company::filters($request->all())->paginate(10);
 
-        $statusesArr = Company::$STATUSES_ARR;
-        $typesArr = Company::$TYPES_ARR;
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
 
         return view('companies.index',
             compact('companies', 'statusesArr', 'typesArr'));
@@ -28,8 +28,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $statusesArr = Company::$STATUSES_ARR;
-        $typesArr = Company::$TYPES_ARR;
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
 
         return view('companies.create',
             compact('statusesArr', 'typesArr'));
@@ -46,7 +46,7 @@ class CompanyController extends Controller
 
         return redirect()
             ->route('companies.index')
-            ->with('success', 'Company created successfully!');
+            ->with('success', __('companies.success_created'));
     }
 
     /**
@@ -58,8 +58,8 @@ class CompanyController extends Controller
 
         $interventionDays = Intervention::getInterventionDaysByMonthAndYear($date, $company);
 
-        $statusesArr = Company::$STATUSES_ARR;
-        $typesArr = Company::$TYPES_ARR;
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
 
         return view('companies.show', [
             'company'           => $company,
@@ -75,8 +75,8 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        $statusesArr = Company::$STATUSES_ARR;
-        $typesArr = Company::$TYPES_ARR;
+        $statusesArr = Company::getStatuses();
+        $typesArr = Company::getTypes();
 
         return view('companies.edit',
             compact('company', 'statusesArr', 'typesArr'));
@@ -93,7 +93,7 @@ class CompanyController extends Controller
 
         return redirect()
             ->route('companies.index')
-            ->with('success', 'Company updated successfully.');
+            ->with('success', __('companies.success_updated'));
     }
 
     /**
@@ -105,6 +105,6 @@ class CompanyController extends Controller
 
         return redirect()
             ->route('companies.index')
-            ->with('success', 'Company was deleted successfully.');
+            ->with('success', __('companies.success_deleted'));
     }
 }

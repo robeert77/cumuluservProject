@@ -14,4 +14,18 @@ return [
     'email' => 'Email',
     'address' => 'Adresă',
     'details' => 'Detalii',
+    'success_created' => 'Compania a fost creată cu succes!',
+    'success_updated' => 'Compania a fost actualizată cu succes!',
+    'success_deleted' => 'Compania a fost ștearsă cu succes!',
+    'types' => [
+        'company'    => 'Companie',
+        'individual' => 'Persoană fizică',
+        'non_profit' => 'Organizație non-profit',
+    ],
+    'statuses' => [
+        'active'                => 'Activ',
+        'future_collaborating'  => 'Colaborare viitoare',
+        'collaborating'         => 'Colaborare',
+        'stop_collaborating'    => 'Colaborare oprită',
+    ],
 ];

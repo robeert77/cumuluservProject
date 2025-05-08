@@ -61,7 +61,12 @@
                 @endphp
                 <tr class="align-middle">
                     <th scope="row">{{ $intervention->id }}</th>
-                    <td>{{ $intervention->title }}</td>
+                    <td>
+                        <a href="{{ route('companies.interventions.show', ['company' => $company, 'intervention' => $intervention]) }}"
+                           class="fw-bold text-decoration-none link-primary link-opacity-50-hover">
+                            {{ $intervention->title }}
+                        </a>
+                    </td>
                     <td>{{ Carbon::parse($intervention->date)->format('d.m.Y') }}</td>
                     <td>{{ $users_arr[$intervention->user_id] ?? 'N/A' }}</td>
                     <td>{{ $startTime->format('H:i') }}</td>

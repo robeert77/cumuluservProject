@@ -30,10 +30,10 @@ class InterventionController extends Controller
      */
     public function create(Company $company)
     {
-        $users_arr = User::pluck('name', 'id');
+        $usersArr = User::pluck('name', 'id');
 
         return view('companies.interventions.create',
-            compact('company', 'users_arr'));
+            compact('company', 'usersArr'));
     }
 
     /**
@@ -47,7 +47,7 @@ class InterventionController extends Controller
 
         return redirect()
             ->route('companies.interventions.index', $company)
-            ->with('success', 'Intervention created successfully!');
+            ->with('success', __('interventions.success_created'));
     }
 
     public function byDate(Request $request, Company $company)
@@ -103,7 +103,7 @@ class InterventionController extends Controller
 
         return redirect()
             ->route('companies.interventions.index', $company)
-            ->with('success', 'Intervention updated successfully!');
+            ->with('success', __('interventions.success_updated'));
     }
 
     /**
@@ -115,6 +115,6 @@ class InterventionController extends Controller
 
         return redirect()
             ->route('companies.interventions.index', $company)
-            ->with('success', 'Intervention was deleted successfully.');
+            ->with('success', __('interventions.success_deleted'));
     }
 }

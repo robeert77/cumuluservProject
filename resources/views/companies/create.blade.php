@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <x-form.label for="status" :value="__('companies.status')"/>
+                    <x-form.label for="status" :value="__('companies.company_status')"/>
                     <x-form.select name="status" :options="$statusesArr" :selected="old('status')"
                                    :placeholder="__('Choose')" required/>
                 </div>
