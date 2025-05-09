@@ -22,8 +22,8 @@ class InterventionFactory extends Factory
         $startTime = $this->faker->time('H:i');
 
         return [
-            'company_id'    => Company::inRandomOrder()->first()?->id,
-            'user_id'       => User::inRandomOrder()->first()?->id,
+            'company_id'    => Company::inRandomOrder()->first()->id,
+            'user_id'       => User::inRandomOrder()->first()->id,
             'title'         => $this->faker->sentence(4),
             'description'   => $this->faker->paragraph(),
             'date'          => $this->faker->dateTimeBetween(Carbon::now()->startOfYear(), Carbon::now())->format('Y-m-d'),

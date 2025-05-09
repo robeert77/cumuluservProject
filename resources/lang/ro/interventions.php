@@ -18,8 +18,10 @@ return [
     'start_time' => 'Ora început',
     'end_time' => 'Ora final',
     'duration' => 'Durata',
+    'duration_parameter' => ':hours h și :minutes m',
     'success_created' => 'Intervenția a fost creată cu succes!',
     'success_updated' => 'Intervenția a fost actualizată cu succes!',
     'success_deleted' => 'Intervenția a fost ștearsă cu succes!',
+    'nr_interventions' => 'Număr de intervenții',
 ];
 

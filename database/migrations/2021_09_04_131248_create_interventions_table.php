@@ -15,7 +15,7 @@ class CreateInterventionsTable extends Migration
     {
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('title');
             $table->longText('description')->nullable();

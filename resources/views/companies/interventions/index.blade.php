@@ -71,7 +71,7 @@
                     <td>{{ $users_arr[$intervention->user_id] ?? 'N/A' }}</td>
                     <td>{{ $startTime->format('H:i') }}</td>
                     <td>{{ $endTime->format('H:i') }}</td>
-                    <td>{{ $hours.'h '.$minutes.'m' }}</td>
+                    <td>{{ __('interventions.duration_parameter', ['hours' => $hours, 'minutes' => $minutes]) }}</td>
                     <td>
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('companies.interventions.edit', [$company, $intervention]) }}" class="btn"

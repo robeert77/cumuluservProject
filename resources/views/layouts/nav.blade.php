@@ -3,7 +3,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand py-3" href="#">
+        <a class="navbar-brand py-3" href="{{ route('home') }}">
             <img src="{{ asset('img/logo_cumuluserv.png') }}" alt="Cumuluserv Logo" width="220" height="59">
         </a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarToggler">

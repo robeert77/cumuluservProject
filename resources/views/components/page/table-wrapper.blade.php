@@ -13,7 +13,7 @@
     @endforeach
 </div>
 
-<div class="card-shadow card bg-white rounded py-4">
+<div class="card-shadow card bg-white rounded mb-5 py-4">
     <div class="card-header border-0">
         <div class="d-flex justify-content-between title-header">
             <h3 class="font-weight-normal">{{ __($title) }}</h3>
