@@ -13,14 +13,14 @@
 
                 <div class="col-md-2">
                     <x-form.label for="type" :value="__('companies.company_type')"/>
-                    <x-form.select name="type" :options="$typesArr" :selected="old('type')" :placeholder="__('Choose')"
+                    <x-form.select name="type" :options="$typesArr" :selected="old('type')" :placeholder="__('messages.choose')"
                                    required/>
                 </div>
 
                 <div class="col-md-2">
                     <x-form.label for="status" :value="__('companies.company_status')"/>
                     <x-form.select name="status" :options="$statusesArr" :selected="old('status')"
-                                   :placeholder="__('Choose')" required/>
+                                   :placeholder="__('messages.choose')" required/>
                 </div>
 
                 <div class="col-md-4">

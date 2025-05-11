@@ -17,6 +17,7 @@ return [
     'success_created' => 'Company created successfully!',
     'success_updated' => 'Company updated successfully!',
     'success_deleted' => 'Company deleted successfully!',
+    'confirm_delete' => 'Are you sure you want to delete this company?',
     'types' => [
         'company'    => 'Company',
         'individual' => 'Individual',

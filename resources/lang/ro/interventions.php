@@ -22,6 +22,7 @@ return [
     'success_created' => 'Intervenția a fost creată cu succes!',
     'success_updated' => 'Intervenția a fost actualizată cu succes!',
     'success_deleted' => 'Intervenția a fost ștearsă cu succes!',
+    'confirm_delete' => 'Sigur doriți să ștergeți această intervenție?',
     'nr_interventions' => 'Număr de intervenții',
 ];
 

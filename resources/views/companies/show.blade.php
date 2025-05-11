@@ -19,20 +19,13 @@
                     </h3>
                 </div>
                 <div class="pe-2 d-flex justify-content-end">
-                    <form action="{{ route('companies.destroy', $company) }}"
-                          method="POST"
-                          onsubmit="return confirm('Are you sure you want to delete this company?');">
-                        @csrf
-                        @method('DELETE')
-                        <x-button type="submit" data-bs-toggle="tooltip" title="{{ __('messages.delete') }}">
-                            <x-icon name="trash3" size="4" color="danger"></x-icon>
-                        </x-button>
-                    </form>
-
                     <a href="{{ route('companies.edit', $company) }}" class="btn" data-bs-toggle="tooltip"
                        title="{{ __('messages.edit') }}">
                         <x-icon name="pencil" size="4" color="primary"></x-icon>
                     </a>
+
+                    <x-form.delete_button route="{{ route('companies.destroy', $company) }}"
+                                          confirmationMessage="'{{ __('companies.confirm_delete') }}'" />
                 </div>
             </div>
 
@@ -41,8 +34,7 @@
             <div class="px-2 fs-5">
                 <strong>{{ __('companies.company_name') }}:</strong> {{ $company->name }} <br>
                 <strong>{{ __('companies.company_type') }}:</strong> {{ $typesArr[$company->type] ?? 'N/A' }} <br>
-                <strong>{{ __('companies.company_status') }}:</strong> {{ $statusesArr[$company->status] ?? 'N/A' }}
-                <br>
+                <strong>{{ __('companies.company_status') }}:</strong> {{ $statusesArr[$company->status] ?? 'N/A' }}<br>
                 <strong>{{ __('companies.address') }}:</strong> {{ $company->address ?? 'N/A' }} <br>
                 <strong>{{ __('companies.vat') }}:</strong> {{ $company->vat ?? 'N/A' }} <br>
                 <strong>{{ __('companies.email') }}:</strong>

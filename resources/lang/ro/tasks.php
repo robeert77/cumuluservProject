@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'task' => 'Sarcină',
+    'tasks' => 'Sarcini',
+    'add_task' => 'Adaugă Sarcină',
+    'edit_task' => 'Editează Sarcină',
+    'title' => 'Titlu',
+    'user_assigned' => 'Utilizator Asignat',
+    'company_assigned' => 'Companie Asignat',
+    'description' => 'Descriere',
+    'status' => 'Status',
+    'scheduled_date' => 'Data Programată',
+    'start_scheduled_date' => 'Data de Începere Programată',
+    'end_scheduled_date' => 'Data de Încheiere Programată',
+    'completed_date' => 'Data Finalizării',
+    'start_completed_date' => 'Data de Începere a Finalizării',
+    'end_completed_date' => 'Data de Încheiere a Finalizării',
+    'created_at' => 'Data Creării',
+    'success_created' => 'Sarcina a fost creată cu succes',
+    'success_updated' => 'Sarcina a fost actualizată cu succes',
+    'success_deleted' => 'Sarcina a fost ștearsă cu succes',
+    'confirm_delete' => 'Sigur doriți să ștergeți această sarcină?',
+    'statuses' => [
+        'active' => 'Activ',
+        'in_progress' => 'În desfășurare',
+        'completed' => 'Finalizat',
+        'on_hold' => 'În așteptare',
+    ],
+];

@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'task' => 'Task',
+    'tasks' => 'Tasks',
+    'add_task' => 'Add Task',
+    'edit_task' => 'Edit Task',
+    'title' => 'Title',
+    'user_assigned' => 'User Assigned',
+    'company_assigned' => 'Company Assigned',
+    'description' => 'Description',
+    'status' => 'Status',
+    'scheduled_date' => 'Scheduled Date',
+    'start_scheduled_date' => 'Start Scheduled Date',
+    'end_scheduled_date' => 'End Scheduled Date',
+    'completed_date' => 'Completed Date',
+    'start_completed_date' => 'Start Completed Date',
+    'end_completed_date' => 'End Completed Date',
+    'created_at' => 'Created Date',
+    'success_created' => 'Task created successfully',
+    'success_updated' => 'Task updated successfully',
+    'success_deleted' => 'Task deleted successfully',
+    'confirm_delete' => 'Are you sure you want to delete this task?',
+    'statuses' => [
+        'active' => 'Active',
+        'in_progress' => 'In Progress',
+        'completed' => 'Completed',
+        'on_hold' => 'On Hold',
+    ],
+];

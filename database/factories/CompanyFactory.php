@@ -23,9 +23,9 @@ class CompanyFactory extends Factory
         return [
             'name'          => $this->faker->company,
             'vat'           => strtoupper(Str::random(10)),
-            'type'          => array_rand(Company::$TYPES_ARR),
-            'with_contract' => $this->faker->boolean(70),
-            'status'        => array_rand(Company::$STATUSES_ARR),
+            'type'          => array_rand(Company::getTypes()),
+            'with_contract' => random_int(0, 1),
+            'status'        => array_rand(Company::getStatuses()),
             'address'       => $this->faker->address,
             'phone'         => $this->faker->optional()->phoneNumber,
             'email'         => $this->faker->optional()->safeEmail,

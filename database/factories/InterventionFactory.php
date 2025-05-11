@@ -19,16 +19,21 @@ class InterventionFactory extends Factory
      */
     public function definition(): array
     {
-        $startTime = $this->faker->time('H:i');
+        $startHour = random_int(7, 17);
+        $startMinute = random_int(0, 59);
+        $startTime = Carbon::createFromTime($startHour, $startMinute);
+
+        $durationInMinutes = random_int(30, 240);
+        $endTime = (clone $startTime)->addMinutes($durationInMinutes);
 
         return [
             'company_id'    => Company::inRandomOrder()->first()->id,
             'user_id'       => User::inRandomOrder()->first()->id,
             'title'         => $this->faker->sentence(4),
             'description'   => $this->faker->paragraph(),
-            'date'          => $this->faker->dateTimeBetween(Carbon::now()->startOfYear(), Carbon::now())->format('Y-m-d'),
-            'start_time'    => $startTime,
-            'end_time'      => $this->faker->time('H:i', date('H:i', strtotime($startTime . ' +3 hour'))),
+            'date'          => $this->faker->dateTimeBetween('-2 months')->format('Y-m-d'),
+            'start_time'    => $startTime->format('H:i'),
+            'end_time'      => $endTime->format('H:i'),
         ];
     }
 }

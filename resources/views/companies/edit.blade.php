@@ -2,7 +2,7 @@
 
 @section('content')
     @component('components.page.form-wrapper', ['title' => __('companies.edit_company')])
-        <form method="POST" action="{{ route('companies.update', $company->id) }}">
+        <form method="POST" action="{{ route('companies.update', $company) }}">
             @csrf
             @method('PUT')
 
@@ -15,13 +15,13 @@
                 <div class="col-md-2">
                     <x-form.label for="type" :value="__('companies.company_type')"/>
                     <x-form.select name="type" :options="$typesArr" :selected="old('type', $company->type)"
-                                   :placeholder="__('Choose')" required/>
+                                   :placeholder="__('messages.choose')" required/>
                 </div>
 
                 <div class="col-md-2">
                     <x-form.label for="status" :value="__('companies.status')"/>
                     <x-form.select name="status" :options="$statusesArr" :selected="old('status', $company->status)"
-                                   :placeholder="__('Choose')" required/>
+                                   :placeholder="__('messages.choose')" required/>
                 </div>
 
                 <div class="col-md-4">

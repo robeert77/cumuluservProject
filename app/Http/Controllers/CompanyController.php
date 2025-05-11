@@ -14,7 +14,9 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = Company::filters($request->all())->paginate(10);
+        $companies = Company::filters($request->all())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         $statusesArr = Company::getStatuses();
         $typesArr = Company::getTypes();
@@ -99,12 +101,11 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function destroy(Company $company, Request $request)
     {
         $company->delete();
 
-        return redirect()
-            ->route('companies.index')
+        return redirect($request->input('redirect_url', route('companies.index')))
             ->with('success', __('companies.success_deleted'));
     }
 }
