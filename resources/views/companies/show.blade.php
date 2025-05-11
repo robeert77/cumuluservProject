@@ -31,7 +31,7 @@
 
                     <a href="{{ route('companies.edit', $company) }}" class="btn" data-bs-toggle="tooltip"
                        title="{{ __('messages.edit') }}">
-                        <x-icon name="pencil" size="4" color="secondary"></x-icon>
+                        <x-icon name="pencil" size="4" color="primary"></x-icon>
                     </a>
                 </div>
             </div>

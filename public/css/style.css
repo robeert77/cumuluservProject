@@ -38,16 +38,6 @@ body {
     background-color: transparent !important;
 }
 
-.btn-outline-primary {
-    border: 1.5px solid #00698a !important;
-    color: #00698a !important;
-}
-
-.btn-outline-primary:hover {
-    background-color: #00698a !important;
-    color: #b6dde1 !important;
-}
-
 kbd {
     background-color: #f7f7f7 !important;
     border-radius: 25px;
