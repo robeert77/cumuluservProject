@@ -18,7 +18,7 @@
                     <div class="col-md-3">
                         <x-form.label for="user_id" :value="__('interventions.accomplished_by')"/>
                         <x-form.select name="user_id" :options="$users_arr" :selected="request('user_id')"
-                                       :placeholder="__('Choose')"/>
+                                       :placeholder="__('messages.choose')"/>
                     </div>
 
                     <div class="col-md-3">
@@ -79,15 +79,8 @@
                                 <x-icon name="pencil" size="5" color="primary"></x-icon>
                             </a>
 
-                            <form action="{{ route('companies.interventions.destroy', [$company, $intervention]) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Are you sure you want to delete this intervention?');">
-                                @csrf
-                                @method('DELETE')
-                                <x-button type="submit" data-bs-toggle="tooltip" title="{{ __('messages.delete') }}">
-                                    <x-icon name="trash3" size="5" color="danger"></x-icon>
-                                </x-button>
-                            </form>
+                            <x-form.delete_button route="{{ route('companies.interventions.destroy', [$company, $intervention]) }}"
+                                                  confirmationMessage="'{{ __('interventions.confirm_delete') }}'" />
                         </div>
                     </td>
                 </tr>

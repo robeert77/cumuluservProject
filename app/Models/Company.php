@@ -116,8 +116,8 @@ class Company extends Model
         return $this->hasMany(Intervention::class);
     }
 
-    public function products()
+    public function tasks()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Task::class);
     }
 }

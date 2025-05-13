@@ -17,6 +17,7 @@ return [
     'success_created' => 'Compania a fost creată cu succes!',
     'success_updated' => 'Compania a fost actualizată cu succes!',
     'success_deleted' => 'Compania a fost ștearsă cu succes!',
+    'confirm_delete' => 'Sigur doriți să ștergeți această companie?',
     'types' => [
         'company'    => 'Companie',
         'individual' => 'Persoană fizică',

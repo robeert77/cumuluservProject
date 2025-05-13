@@ -13,10 +13,7 @@
                         <a class="nav-link active" aria-current="page" href="{{ route('companies.index') }}">{{ __('companies.companies')  }}</a>
                     </li>
                     <li class="nav-item fs-5 pe-0 pe-md-3">
-                        <a class="nav-link text-light" href="#">{{ __('Products')  }}</a>
-                    </li>
-                    <li class="nav-item fs-5 pe-0 pe-md-3">
-                        <a class="nav-link text-light" href="#">{{ __('Reports')  }}</a>
+                        <a class="nav-link text-light" href="{{ route('tasks.index') }}">{{ __('tasks.tasks')  }}</a>
                     </li>
                     <li class="nav-item dropdown fs-5 pe-0 pe-md-3">
                         <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,7 +31,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                                          onclick="event.preventDefault();
                                           this.closest('form').submit();" >
-                                        {{ __('Log Out') }}
+                                        {{ __('auth.log_out') }}
                                     </a>
                                 </form>
                             </li>

@@ -33,4 +33,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function interventions()
+    {
+        return $this->hasMany(Intervention::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

@@ -17,6 +17,7 @@ class InterventionController extends Controller
     {
         $interventions = $company->interventions()
             ->filters($request->all())
+            ->orderBy('date', 'desc')
             ->paginate(10);
 
         $users_arr = User::pluck('name', 'id');
@@ -109,12 +110,11 @@ class InterventionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company, Intervention $intervention)
+    public function destroy(Company $company, Intervention $intervention, Request $request)
     {
         $intervention->delete();
 
-        return redirect()
-            ->route('companies.interventions.index', $company)
+        return redirect($request->input('redirect_url', route('companies.interventions.index', $company)))
             ->with('success', __('interventions.success_deleted'));
     }
 }

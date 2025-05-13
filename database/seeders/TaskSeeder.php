@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Task;
 use Illuminate\Database\Seeder;
-use App\Models\Company;
 
-class CompanySeeder extends Seeder
+class TaskSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Company::factory(20)->create();
+        Task::factory()->count(20)->create();
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InterventionController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Session;
@@ -34,6 +35,8 @@ Route::middleware(['auth'])->group(callback: function () {
     Route::resource('companies', CompanyController::class);
 
     Route::resource('companies.interventions', InterventionController::class);
+
+    Route::resource('tasks', TaskController::class);
 });
 
 require __DIR__.'/auth.php';

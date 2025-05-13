@@ -22,5 +22,6 @@ return [
     'success_created' => 'Intervention created successfully!',
     'success_updated' => 'Intervention updated successfully!',
     'success_deleted' => 'Intervention deleted successfully!',
+    'confirm_delete' => 'Are you sure you want to delete this intervention?',
     'nr_interventions' => 'Number of Interventions',
 ];

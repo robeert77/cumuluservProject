@@ -24,16 +24,8 @@
                 </div>
 
                 <div class="pe-2 d-flex justify-content-end">
-                    <form
-                        action="{{ route('companies.interventions.destroy', [$intervention->company, $intervention]) }}"
-                        method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this intervention?');">
-                        @csrf
-                        @method('DELETE')
-                        <x-button type="submit" data-bs-toggle="tooltip" title="{{ __('messages.delete') }}">
-                            <x-icon name="trash3" size="4" color="danger"></x-icon>
-                        </x-button>
-                    </form>
+                    <x-form.delete_button route="{{ route('companies.interventions.destroy', [$intervention->company, $intervention]) }}"
+                                          confirmationMessage="'{{ __('interventions.confirm_delete') }}'" />
 
                     <a href="{{ route('companies.interventions.edit', [$intervention->company, $intervention]) }}"
                        class="btn" data-bs-toggle="tooltip" title="{{ __('messages.edit') }}">

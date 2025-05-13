@@ -19,4 +19,5 @@ return [
     'warning' => 'Warning',
     'info' => 'Info',
     'created' => 'Created',
+    'choose' => 'Choose',
 ];
