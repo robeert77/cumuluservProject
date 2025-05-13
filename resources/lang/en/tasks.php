@@ -21,6 +21,13 @@ return [
     'success_updated' => 'Task updated successfully',
     'success_deleted' => 'Task deleted successfully',
     'confirm_delete' => 'Are you sure you want to delete this task?',
+    'complete_task' => 'Complete Task',
+    'start_task' => 'Start Task',
+    'restart_task' => 'Restart Task',
+    'on_hold_task' => 'On Hold Task',
+    'invalid_status' => 'Invalid status',
+    'invalid_status_transition_from_to' => 'Invalid status transition from :from to :to',
+    'error_edit_not_allowed' => 'Editing this task is not allowed',
     'statuses' => [
         'active' => 'Active',
         'in_progress' => 'In Progress',

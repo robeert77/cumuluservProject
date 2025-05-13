@@ -37,6 +37,9 @@ Route::middleware(['auth'])->group(callback: function () {
     Route::resource('companies.interventions', InterventionController::class);
 
     Route::resource('tasks', TaskController::class);
+
+    Route::get('tasks/{task}/status/{status}', [TaskController::class, 'changeStatus'])
+        ->name('tasks.status');
 });
 
 require __DIR__.'/auth.php';

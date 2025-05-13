@@ -15,7 +15,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'success' => 'Success',
-    'error' => 'Error',
+    'danger' => 'Error',
     'warning' => 'Warning',
     'info' => 'Info',
     'created' => 'Created',

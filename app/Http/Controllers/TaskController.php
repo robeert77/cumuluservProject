@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
@@ -60,11 +61,32 @@ class TaskController extends Controller
             compact('task', 'statusesArr'));
     }
 
+    public function changeStatus(Task $task, Int $newStatus)
+    {
+        try {
+            $task->updateStatus($newStatus);
+
+            return redirect()
+                ->back()
+                ->with('success', __('tasks.success_updated'));
+        } catch (ValidationException $e) {
+            return redirect()
+                ->back()
+                ->with('danger', $e->getMessage());
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Task $task)
     {
+        if (!$task->isEditable()) {
+            return redirect()
+                ->back()
+                ->with('danger', __('tasks.error_edit_not_allowed'));
+        }
+
         $usersArr = User::pluck('name', 'id');
         $statusesArr = Task::getStatuses();
 
@@ -77,8 +99,13 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $validated = $request->validate((new Task())->validationRules());
+        if (!$task->isEditable()) {
+            return redirect()
+                ->back()
+                ->with('danger', __('tasks.error_edit_not_allowed'));
+        }
 
+        $validated = $request->validate((new Task())->validationRules());
         $task->update($validated);
 
         return redirect()

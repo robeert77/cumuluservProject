@@ -15,7 +15,7 @@ return [
     'edit' => 'Editează',
     'delete' => 'Șterge',
     'success' => 'Succes',
-    'error' => 'Eroare',
+    'danger' => 'Eroare',
     'warning' => 'Atenționare',
     'info' => 'Informare',
     'created' => 'Creat',

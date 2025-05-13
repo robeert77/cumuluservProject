@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class Task extends Model
 {
@@ -31,13 +32,53 @@ class Task extends Model
         if (empty(self::$STATUSES_ARR)) {
             self::$STATUSES_ARR = [
                 self::STATUS_ACTIVE      => __('tasks.statuses.active'),
-                self::STATUS_IN_PROGRESS => __('tasks.statuses.active'),
+                self::STATUS_IN_PROGRESS => __('tasks.statuses.in_progress'),
                 self::STATUS_COMPLETED   => __('tasks.statuses.completed'),
                 self::STATUS_ON_HOLD     => __('tasks.statuses.on_hold'),
             ];
         }
 
         return self::$STATUSES_ARR;
+    }
+
+    public function updateStatus(int $newStatus): void
+    {
+        $validStatuses = array_keys(self::getStatuses());
+
+        if (!in_array($newStatus, $validStatuses)) {
+            throw ValidationException::withMessages([
+                'status' => __('tasks.invalid_status'),
+            ]);
+        }
+
+        $current = $this->status;
+        $updateArr = [
+            'status'            => $newStatus,
+            'completed_date'    => $newStatus === self::STATUS_COMPLETED ? now() : null,
+        ];
+
+        $allowedTransitions = [
+            self::STATUS_ACTIVE => [self::STATUS_IN_PROGRESS, self::STATUS_ON_HOLD],
+            self::STATUS_IN_PROGRESS => [self::STATUS_COMPLETED, self::STATUS_ON_HOLD],
+            self::STATUS_ON_HOLD => [self::STATUS_ACTIVE],
+            self::STATUS_COMPLETED => [],
+        ];
+
+        if (!in_array($newStatus, $allowedTransitions[$current], true)) {
+            throw ValidationException::withMessages([
+                'status' => __('tasks.invalid_status_transition_from_to', [
+                    'from' => self::getStatuses()[$current] ?? $current,
+                    'to'   => self::getStatuses()[$newStatus] ?? $newStatus,
+                ]),
+            ]);
+        }
+
+        $this->update($updateArr);
+    }
+
+    public function isEditable(): bool
+    {
+        return !in_array($this->status, [self::STATUS_COMPLETED, self::STATUS_ON_HOLD], true);
     }
 
     public function scopeFilters(Builder $query, array $filters)

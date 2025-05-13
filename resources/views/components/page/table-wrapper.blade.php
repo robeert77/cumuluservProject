@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-end my-4">
-    @foreach (['success', 'error', 'warning', 'info'] as $msg)
-        @if(session($msg))
+    @foreach (['success', 'danger', 'warning', 'info'] as $msg)
+        @if (session($msg))
             <div class="alert alert-{{ $msg }} col-md-4 alert-dismissible fade show m-0" role="alert">
                 <h4 class="alert-heading">{{ ucfirst(__('messages.'.$msg)) }}</h4>
                 <hr class="my-2">
